@@ -2130,6 +2130,11 @@ zero_out:
 	 * This page will go to BIO.  Do we need to send this
 	 * BIO off first?
 	 */
+	
+	/* Commented by Jonggyu 
+	 * if the bios are contiguous, split into mutiple ones
+	 */
+
 	if (bio && (!page_is_mergeable(F2FS_I_SB(inode), bio,
 				       *last_block_in_bio, block_nr) ||
 		    !f2fs_crypt_mergeable_bio(bio, inode, page->index, NULL))) {
