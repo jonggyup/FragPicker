@@ -15,17 +15,20 @@ def read_file (filename, chunksize=4096):
 
 defragsize=int(sys.argv[2])
 
+#Variables for selective defragmentation
 start=int(sys.argv[3])
 end=int(sys.argv[4])
-
+#
 
 frag_degree = open("frag_degree", "w+")
 target_file = open(sys.argv[1],"rb+",0)
 
 
 subprocess.check_call(["filefrag", "-v", sys.argv[1]], stdout=frag_degree)
-frag_degree.seek(start)
 
+#Set up the file offset to start
+frag_degree.seek(start)
+#
 
 frag_degree.readline()
 line = frag_degree.readline()
@@ -39,8 +42,10 @@ lines = frag_degree.readlines()
 bufsize = 0
 need = 0
 for line in lines[:-1]:
+    #Perform defragmentation until the file offset reaches "end" offset
     if (target_file.tell() >= end)
         break
+    #
 
     fragsize = int(line.split(':')[3])
     bufsize += fragsize * 4
