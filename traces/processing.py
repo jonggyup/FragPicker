@@ -6,6 +6,13 @@ import os
 result_file = open("./after_process.result", "w+")
 trace_file = open("./trace.result", "rb+",0)
 
+
+def simplecount(filename):
+    lines = 0
+    for line in open(filename):
+        lines += 1
+    return lines
+
 lines = trace_file.readlines()
 file_list = set()
 for line in lines[:-1]:
@@ -17,10 +24,12 @@ for line in lines[:-1]:
     file_list.add(req_info[0])
 
 
+filelist_f = open("./filelist.txt", "w+")
 for filename in file_list:
     filename = filename.decode("utf-8")
     subprocess.call(["sort", "-g", "./"+str(filename)+".txt"], stdout=open("./tmp.txt", "w+"))
     subprocess.call(["mv", "./tmp.txt", "./"+str(filename)+".txt"])
+    filelist_f.write(filename+" "+str(simplecount("./"+str(filename)+".txt")) + "\n")
 
 
 
