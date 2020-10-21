@@ -1,15 +1,22 @@
 1. Find the minimal range of files for defragmentation.
-	1-1. Profiling read requests
-	1-2. Merge the ranges of read requests
+	1-1. Profiling read requests --> trace.sh
+	1-2. Merge the ranges of read requests --> post-processing.py and merge.py
 	1-3. Clarify hot area of the ranges
 2. Defragment the minimal range.
 
 
 
+
+
+Ongoing tasks
+1. With range file, perform defragmentation and test it.
+2. Hot area define (maybe includes sorting again)
+
+
 Questions.
 
-1. Which one is better?
-1) Just tracing the read requests and defragment its range one by one.
+1. Which one is better? (Solved)
+x 1) Just tracing the read requests and defragment its range one by one.
 	 Problems: 	1. I have to implement a new fragmentation profiling tool for
 mapping info of each logical offset and physical address.
 				2. The later requests can ruin the previous defragmentaiton.
@@ -17,6 +24,9 @@ For example, the first request and the second request are overlapped. In this
 case, defragmentaiton for the second request can fragment the blocks of the
 first reqeust
 
-2) Profiling all the requests and define the final range of defragmentation.
+v 2) Profiling all the requests and define the final range of defragmentation.
 	Problems: 	1. How to define hotness
-				2. Maybe wider range of defragmentation
+			2. Maybe wider range of defragmentation
+
+
+
