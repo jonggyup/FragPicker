@@ -18,7 +18,6 @@ for line in lines:
     result_file = open("./tmp.txt", "w+")
 
     for trace_line in trace_lines:
-        print(trace_line)
         splitdata = trace_line.split();
         start = int(splitdata[0])
         end = int(splitdata[1])
@@ -43,7 +42,7 @@ for line in lines:
             currentNums += 1
             currentEnd = end
         
-        result_file.write(str(currentStart) +" " + str(currentEnd) + " " + str(currentNums) + "\n") 
+    result_file.write(str(currentStart) +" " + str(currentEnd) + " " + str(currentNums) + "\n") 
 
     result_file.close()
     subprocess.call(["mv", "./tmp.txt", "./"+str(filename)+".merged"])
