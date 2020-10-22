@@ -1,2 +1,2 @@
 #!/bin/bash
-rm *.merged *.txt *.sorted
+rm *.merged *.txt *.sorted *result

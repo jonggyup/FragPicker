@@ -19,7 +19,6 @@ for line in lines[:-1]:
     #filename = subprocess.call(["find", "/mnt", "-inum", req_info[0]])
     start = int(req_info[2])
     end = int(req_info[2]) + int(req_info[1]) - 1
-    print(start)
     f = open("./"+str(req_info[0].decode('utf-8'))+".txt", 'a+')
     f.write(str(start) +" "+ str(end) +" "+ "1" + "\n")
     f.close()
