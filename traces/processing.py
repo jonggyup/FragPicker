@@ -3,7 +3,6 @@ import subprocess
 import os
 
 
-result_file = open("./after_process.result", "w+")
 trace_file = open("./trace.result", "rb+",0)
 
 
@@ -34,13 +33,5 @@ for filename in file_list:
     subprocess.call(["mv", "./tmp.txt", "./"+str(filename)+".txt"])
     filelist_f.write(filename+" "+str(simplecount("./"+str(filename)+".txt")) + "\n")
 
-
-
-
-
-
-
-
-result_file.close()
 trace_file.close()
 
