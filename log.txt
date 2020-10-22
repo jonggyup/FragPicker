@@ -10,7 +10,6 @@
 
 Ongoing tasks
 1. With range file, perform defragmentation and test it.
-2. Hot area define (maybe includes sorting again)
 
 
 Questions.
