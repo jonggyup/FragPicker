@@ -3,7 +3,6 @@ import subprocess
 import os
 
 filelist_f = open("./filelist.txt", "r+")
-result_file = open("./tmp.txt", "w+")
 
 lines = filelist_f.readlines()
 
@@ -15,7 +14,9 @@ for line in lines:
     currentEnd = -1
     currentNums = 0
     begin = False
-    
+ 
+    result_file = open("./tmp.txt", "w+")
+
     for trace_line in trace_lines:
         print(trace_line)
         splitdata = trace_line.split();
@@ -41,5 +42,8 @@ for line in lines:
         if currentEnd <= end:
             currentNums += 1
             currentEnd = end
+        
+        result_file.write(str(currentStart) +" " + str(currentEnd) + " " + str(currentNums) + "\n") 
 
-result_file.write(str(currentStart) +" " + str(currentEnd) + " " + str(currentNums) + "\n") 
+    result_file.close()
+    subprocess.call(["mv", "./tmp.txt", "./"+str(filename)+".merged"])
