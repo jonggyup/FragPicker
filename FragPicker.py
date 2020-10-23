@@ -16,7 +16,7 @@ filename_lines = filelist_f.readlines()
 
 for filename_line in filename_lines:
 
-    if int(filename_line.split()[1]) < 500 or str(filename_line.split()[0]) == '':
+    if str(filename_line.split()[0]) == '':
         continue
     
     filename = subprocess.check_output(["find", "/mnt", "-inum", filename_line.split()[0]]).decode('ascii').strip()
