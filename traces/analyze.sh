@@ -4,14 +4,15 @@
 #script -c "./trace.sh iozone" ./trace.result 2>&1 &
 
 #/usr/share/bcc/tools/trace 'vfs_read(struct file *file, char __user *buf, size_t count, loff_t *pos) "ino = %llu | size = %llu | pos = %u", file->f_inode->i_ino, count, *pos' -n iozone &> ./trace.result 2>&1 &
-
-./trace.sh iozone &
+./remove.sh
+./trace.sh fio &
 sleep 5
 #sh -c './trace.sh iozone | tee trace.result' &
 id=$!
 #run benchmark here
-iozone -i 1 -r 128k -f /mnt/1 -w -I -s 100m -+n >/dev/null
-
+#iozone -i 5 -r 128k -j 4 -f /mnt/2 -w -I -s 100m -+n
+#grep -r "asdf" /mnt/1
+fio --directory=/mnt --name fio_test_file --direct=1 --rw=read:1024k --bs=128k --size=1G --numjobs=1 --time_based --runtime=30 --group_reporting --norandommap 
 
 kill -INT $id
 sleep 5

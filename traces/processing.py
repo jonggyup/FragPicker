@@ -14,7 +14,7 @@ def simplecount(filename):
 
 lines = trace_file.readlines()
 file_list = set()
-for line in lines[:-1]:
+for line in lines:
     req_info = line.split() #req_info = [i_no, size, pos]
     #filename = subprocess.call(["find", "/mnt", "-inum", req_info[0]])
     start = int(req_info[2])
