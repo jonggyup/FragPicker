@@ -24,9 +24,10 @@ for line in lines:
     size = int(req_info[1])
     start = int(req_info[2])
     end = int(req_info[2]) + int(req_info[1]) - 1
+    direct = int(req_info[3])
     
-    #Sequential Read
-    if start == prevFileEnd + 1 and prevFileNo == fileNo:
+    #Sequential Read # direct = 16384 when O_DIRECT
+    if start == prevFileEnd + 1 and prevFileNo == fileNo and direct == 0:
         prevFileEnd = end
 
         if readaheadRange >= end:
