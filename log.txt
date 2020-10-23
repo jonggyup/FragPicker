@@ -9,7 +9,9 @@
 
 
 Ongoing tasks
-1. With range file, perform defragmentation and test it.
+1. Check what kinds of system calls do other benchmarks use (Such as
+vfs_readv, etc.)
+2. Handle the readahead.
 
 
 Questions.
