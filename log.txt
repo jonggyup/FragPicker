@@ -10,7 +10,7 @@
 
 Ongoing tasks
 1. Check what kinds of system calls do other benchmarks use (such as vfs_readv, etc.)
---> YCSB test
+--> YCSB test ongoing (Thread-2 performs I/O)
 
 Questions.
 
