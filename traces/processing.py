@@ -49,11 +49,12 @@ for line in lines:
     f.close()
     file_list.add(req_info[0])
 
-
 filelist_f = open("./filelist.txt", "w+")
 for filename in file_list:
     filename = filename.decode("utf-8")
-    if int(simplecount("./"+str(filename)+".txt")) < 30:
+    filepath = subprocess.check_output(["find", "/mnt", "-inum", filename])
+    if str(filepath) == b'' or int(simplecount("./"+str(filename)+".txt")) < 30:
+        #print(filepath)
         subprocess.call(["rm", "./"+str(filename)+".txt"])
         continue
 
