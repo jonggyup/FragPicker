@@ -15,7 +15,8 @@ id=$!
 #fio --directory=/mnt --name fio_test_file --direct=1 --rw=randread --bs=128k --size=1G --numjobs=1 --time_based --runtime=30 --group_reporting --norandommap 
 path=/home/jonggyu/Research/ATC2021/Evaluation/ATC/YCSB
 
-(cd $path && ./bin/ycsb run rocksdb -s -P workloads/workloadc -p rocksdb.dir=/mnt/ycsb-rocksdb-data) &> /dev/null
+#(cd $path && ./bin/ycsb run rocksdb -s -P workloads/workloadc -p rocksdb.dir=/mnt/ycsb-rocksdb-data) &> /dev/null
+(cd $path && ./bin/ycsb run mongodb -s -P workloads/workloadc)
 kill -INT $id
 sleep 5
 kill $(pgrep trace)

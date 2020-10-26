@@ -20,6 +20,9 @@ readaheadRange=0
 
 for line in lines:
     req_info = line.split() #req_info = [i_no, size, pos]
+#    print(req_info[0])
+    if req_info[0] == b'=':
+        continue
     fileNo = int(req_info[0])
     size = int(req_info[1])
     start = int(req_info[2])
@@ -53,7 +56,7 @@ filelist_f = open("./filelist.txt", "w+")
 for filename in file_list:
     filename = filename.decode("utf-8")
     filepath = subprocess.check_output(["find", "/mnt", "-inum", filename])
-    if str(filepath) == b'' or int(simplecount("./"+str(filename)+".txt")) < 30:
+    if str(filepath) == "b\'\'" or int(simplecount("./"+str(filename)+".txt")) < 0:
         #print(filepath)
         subprocess.call(["rm", "./"+str(filename)+".txt"])
         continue
