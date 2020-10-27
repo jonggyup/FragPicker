@@ -39,34 +39,33 @@ for filename_line in filename_lines:
     targetRange = targetRange_f.readline()
     startRange = int(targetRange.split()[0])
     endRange = int(targetRange.split()[1])
-    currentOffset = 0
+    currentStart = 0
+    currentEnd = -1
 
     for filefrag_line in filefrag_lines:
-        currentOffset+=int(filefrag_line.split(':')[3])*4096
-        if currentOffset < startRange:
-            continue
-        
-        if currentOffset >= startRange and currentOffset < endRange:
-            defrag_func(targetFile_f, startRange, endRange)
-            targetRange = targetRange_f.readline()
-            if targetRange == '':
+        currentStart = currentEnd + 1
+        currentEnd= currentStart + int(filefrag_line.split(':')[3])*4096 - 1
+
+        while targetRange != '':
+            if currentStart <= startRange and currentEnd >= endRange:
+                targetRange = targetRange_f.readline()
+                if targetRange == '':
+                    break
+                startRange = int(targetRange.split()[0])
+                endRange = int(targetRange.split()[1])
+
+            elif currentEnd <= startRange:
                 break
+
+
+            elif currentStart <= startRange and currentEnd < endRange and currentEnd > startRange:
+                defrag_func(targetFile_f, startRange, endRange)
+                targetRange = targetRange_f.readline()
+                if targetRange == '':
+                    break
     
-            startRange = int(targetRange.split()[0])
-            endRange = int(targetRange.split()[1])
-            continue
-
-        if currentOffset >= endRange:
-            targetRange = targetRange_f.readline()
-
-            if targetRange == '':
-                break
-
-            startRange = int(targetRange.split()[0])
-            endRange = int(targetRange.split()[1])
-
-            continue
-
+                startRange = int(targetRange.split()[0])
+                endRange = int(targetRange.split()[1])
 
     os.fsync(targetFile_f.fileno())
     targetFile_f.close()

@@ -56,8 +56,7 @@ filelist_f = open("./filelist.txt", "w+")
 for filename in file_list:
     filename = filename.decode("utf-8")
     filepath = subprocess.check_output(["find", "/mnt", "-inum", filename])
-    if str(filepath) == "b\'\'" or int(simplecount("./"+str(filename)+".txt")) < 0:
-        #print(filepath)
+    if os.path.isdir(str(filepath)) == True or str(filepath) == "b\'\'" or int(simplecount("./"+str(filename)+".txt")) < 0:
         subprocess.call(["rm", "./"+str(filename)+".txt"])
         continue
 
