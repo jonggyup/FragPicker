@@ -16,10 +16,12 @@ id=$!
 #fio --directory=/mnt --name fio_test_file --direct=1 --rw=randread --bs=128k --size=1G --numjobs=1 --time_based --runtime=30 --group_reporting --norandommap 
 
 #YCSB benchmark
-path=/home/jonggyu/Research/ATC2021/Evaluation/ATC/YCSB
+#path=/home/jonggyu/Research/ATC2021/Evaluation/ATC/YCSB
 #(cd $path && ./bin/ycsb run rocksdb -s -P workloads/workloadc -p rocksdb.dir=/mnt/ycsb-rocksdb-data) &> /dev/null
-(cd $path && ./bin/ycsb run mongodb -s -P workloads/workloadc)
+#(cd $path && ./bin/ycsb run mongodb -s -P workloads/workloadc)
 
+#Running $1 benchmark
+$1
 #MongoDB
 #path=/home/jonggyu/Research/ATC2021/Evaluation/mongodb
 #(cd $path && ./replay.sh)
