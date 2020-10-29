@@ -9,7 +9,7 @@ walk_dir () {
 		else
 #			echo "$pathname"
 #			python3.8 /home/jonggyu/Research/Benchmarks/HotStorage/defrag.py $pathname 128
-			python3.8 /home/jonggyu/Research/Benchmarks/DATE/iozone/defrag_all.py $pathname 128
+			python3.8 ./defrag_all.py $pathname 128
 
 		fi
 	done
