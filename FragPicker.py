@@ -20,7 +20,6 @@ for filename_line in filename_lines:
         continue
     
     filename = subprocess.check_output(["find", "/mnt", "-inum", filename_line.split()[0]]).decode('ascii').strip()
-    
 
 
     filefrag_f=open("./traces/frag_degree.txt", "w+")
@@ -34,6 +33,7 @@ for filename_line in filename_lines:
     filefrag_f=open("./traces/frag_degree.txt", "r+")
     filefrag_f.seek(0)
     filefrag_lines = filefrag_f.readlines()
+
     targetFile_f = open(filename, "rb+")
     targetRange_f = open("./traces/"+filename_line.split()[0]+".merged", "r")
     targetRange = targetRange_f.readline()
@@ -70,5 +70,6 @@ for filename_line in filename_lines:
     os.fsync(targetFile_f.fileno())
     targetFile_f.close()
     filefrag_f.close()
+
 
 

@@ -21,7 +21,7 @@ id=$!
 #(cd $path && ./bin/ycsb run mongodb -s -P workloads/workloadc)
 
 #Running $1 benchmark
-$1 < $2
+$1 $2
 #MongoDB
 #path=/home/jonggyu/Research/ATC2021/Evaluation/mongodb
 #(cd $path && ./replay.sh)
