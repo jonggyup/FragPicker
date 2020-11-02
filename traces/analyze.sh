@@ -21,12 +21,14 @@ id=$!
 #(cd $path && ./bin/ycsb run mongodb -s -P workloads/workloadc)
 
 #Running $1 benchmark
-$1 $2
+#$1 $2
+fio /mnt/read.fio
+
 #MongoDB
 #path=/home/jonggyu/Research/ATC2021/Evaluation/mongodb
 #(cd $path && ./replay.sh)
 
-sleep 100
+sleep 3
 kill -INT $id
 sleep 5
 kill $(pgrep trace)

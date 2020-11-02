@@ -2,7 +2,7 @@ import sys
 import subprocess
 import os
 
-def defrag_func(targetFile_F, start, end):
+def defrag_func(targetFile_f, start, end):
     targetFile_f.seek(start, 0)
     size = end-start+1
     data = targetFile_f.read(size)
