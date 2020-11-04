@@ -22,7 +22,9 @@ id=$!
 
 #Running $1 benchmark
 #$1 $2
-fio /mnt/read.fio
+#fio /mnt/read.fio
+path=/home/jonggyu/Research/ATC2021/Evaluation/synthetic
+(cd $path && ./read_seq /mnt/2 128)
 
 #MongoDB
 #path=/home/jonggyu/Research/ATC2021/Evaluation/mongodb

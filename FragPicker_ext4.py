@@ -7,8 +7,8 @@ import ctypes.util
 def reallocation_func(targetFile_f, start, size):
     #fallocate(targetFile_f, start, size, mode=FALLOC_FL_PUNCH_HOLE)
     #fallocate(targetFile_f, start, size)
-    print(str(targetFile_f.name))
-    print("fallocate", "-o", str(start), "-l", str(size), str(targetFile_f.name))
+#    print(str(targetFile_f.name))
+#    print("fallocate", "-o", str(start), "-l", str(size), str(targetFile_f.name))
     subprocess.check_call(["fallocate", "-p", "-o", str(start), "-l", str(size), str(targetFile_f.name)])
     subprocess.check_call(["fallocate", "-o", str(start), "-l", str(size), str(targetFile_f.name)])
 
