@@ -34,7 +34,7 @@ for filename_line in filename_lines:
     filefrag_f.seek(0)
     filefrag_lines = filefrag_f.readlines()
 
-    targetFile_f = open(filename, "rb+", buffering=10485760)
+    targetFile_f = open(filename, "rb+")
     targetRange_f = open("./traces/"+filename_line.split()[0]+".merged", "r")
     targetRange = targetRange_f.readline()
     startRange = int(targetRange.split()[0])

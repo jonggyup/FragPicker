@@ -9,7 +9,7 @@ def reallocation_func(target_file, start, size):
 defragsize=int(sys.argv[2])
 
 frag_degree = open("frag_degree", "w+")
-target_file = open(sys.argv[1],"rb+", buffering=10485760)
+target_file = open(sys.argv[1],"rb+")
 
 
 subprocess.check_call(["filefrag", "-v", sys.argv[1]], stdout=frag_degree)
