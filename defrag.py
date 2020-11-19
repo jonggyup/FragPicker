@@ -16,7 +16,7 @@ def read_file (filename, chunksize=4096):
 defragsize=int(sys.argv[2])
 
 frag_degree = open("frag_degree", "w+")
-target_file = open(sys.argv[1],"rb+",0)
+target_file = open(sys.argv[1],"rb+", buffering=10485760)
 
 
 subprocess.check_call(["filefrag", "-v", sys.argv[1]], stdout=frag_degree)

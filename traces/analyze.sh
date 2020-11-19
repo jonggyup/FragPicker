@@ -23,12 +23,30 @@ id=$!
 #Running $1 benchmark
 #$1 $2
 #fio /mnt/read.fio
-path=/home/jonggyu/Research/ATC2021/Evaluation/synthetic
-(cd $path && ./read_seq /mnt/2 128)
+
+case $1 in
+	syn_seq)
+		#######################
+		#synthetic stripe read#
+		#######################
+		path=/home/jonggyu/Research/ATC2021/Evaluation/synthetic
+		(cd $path && ./read_seq /mnt/2 128)
+		;;
+	syn_stripe)
+		#######################
+		#synthetic seq read#
+		#######################
+		path=/home/jonggyu/Research/ATC2021/Evaluation/synthetic
+		(cd $path && ./read_stripe /mnt/2 128)
+		;;
+esac
 
 #MongoDB
 #path=/home/jonggyu/Research/ATC2021/Evaluation/mongodb
 #(cd $path && ./replay.sh)
+
+#sqlite experiment
+#sqlite3 /mnt/dbbench_sqlite3-2.db "SELECT *from test" > /dev/null
 
 sleep 3
 kill -INT $id
