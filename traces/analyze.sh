@@ -23,7 +23,7 @@ id=$!
 #Running $1 benchmark
 #$1 $2
 #fio /mnt/read.fio
-
+<<COMMENT
 case $1 in
 	syn_seq)
 		#######################
@@ -40,6 +40,29 @@ case $1 in
 		(cd $path && ./read_stripe /mnt/2 128)
 		;;
 esac
+COMMENT
+
+#Running $1 benchmark
+#$1 $2
+#Synthetic write
+case $1 in
+	syn_seq)
+		#######################
+		#synthetic stripe read#
+		#######################
+		path=/home/jonggyu/Research/ATC2021/Evaluation/synthetic_write
+		(cd $path && ./write_seq /mnt/2 128)
+		;;
+	syn_stripe)
+		#######################
+		#synthetic seq read#
+		#######################
+		path=/home/jonggyu/Research/ATC2021/Evaluation/synthetic_write
+		(cd $path && ./write_stripe /mnt/2 128)
+		;;
+esac
+
+
 
 #MongoDB
 #path=/home/jonggyu/Research/ATC2021/Evaluation/mongodb
