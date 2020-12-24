@@ -44,7 +44,12 @@ COMMENT
 
 #Running $1 benchmark
 #$1 $2
+#TrimTest (Fileserver)
+grep -r "asdf" /mnt/
+
+
 #Synthetic write
+<<COMMENT
 case $1 in
 	syn_seq)
 		#######################
@@ -62,7 +67,27 @@ case $1 in
 		;;
 esac
 
+COMMENT
 
+#HotnessTest
+<<COMMENT
+case $1 in
+	uniform)
+		#######################
+		#synthetic stripe read#
+		#######################
+		path=/home/jonggyu/Research/ATC2021/Evaluation/hotnessTest
+		(cd $path && ./read_uniform /mnt/1 128)
+		;;
+	zipf)
+		#######################
+		#synthetic seq read#
+		#######################
+		path=/home/jonggyu/Research/ATC2021/Evaluation/hotnessTest
+		(cd $path && ./read_zipf /mnt/2 128)
+		;;
+esac
+COMMENT
 
 #MongoDB
 #path=/home/jonggyu/Research/ATC2021/Evaluation/mongodb
@@ -80,3 +105,4 @@ kill $(pgrep trace)
 
 python3 ./processing.py
 python3 ./merge.py
+./hotness.sh $2

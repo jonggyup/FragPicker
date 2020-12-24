@@ -1,7 +1,7 @@
 #!/bin/bash
 #$1 is process name
 
-percentage=5
+percentage=$1
 division=10
 
 while IFS= read -r line
