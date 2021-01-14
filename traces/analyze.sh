@@ -21,9 +21,12 @@ id=$!
 #(cd $path && ./bin/ycsb run mongodb -s -P workloads/workloadc)
 
 #Running $1 benchmark
+#TPCC
 #$1 $2
 #fio /mnt/read.fio
-<<COMMENT
+
+#Synthetic read
+#<<COMMENT
 case $1 in
 	syn_seq)
 		#######################
@@ -40,12 +43,12 @@ case $1 in
 		(cd $path && ./read_stripe /mnt/2 128)
 		;;
 esac
-COMMENT
+#COMMENT
 
 #Running $1 benchmark
 #$1 $2
 #TrimTest (Fileserver)
-grep -r "asdf" /mnt/
+#grep -r "asdf" /mnt/
 
 
 #Synthetic write
