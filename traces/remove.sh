@@ -1,2 +1,2 @@
 #!/bin/bash
-rm *.merged *.txt *.sorted *.result
+rm *.merged *.txt *.sorted *.result ../frag_degree
