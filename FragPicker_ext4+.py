@@ -1,7 +1,7 @@
 import sys
 import subprocess
 import os
-from fallocate import fallocate
+import fallocate
 #import ctypes
 #import ctypes.util
 
@@ -12,8 +12,8 @@ def reallocation_func(targetFile_f, start, size):
 #    print("fallocate", "-o", str(start), "-l", str(size), str(targetFile_f.name))
 #   subprocess.check_call(["fallocate", "-p", "-o", str(start), "-l", str(size), str(targetFile_f.name)])
 #   subprocess.check_call(["fallocate", "-o", str(start), "-l", str(size), str(targetFile_f.name)])
-    fallocate(targetFile_f, start, size, fallocate.FALLOC_FL_PUNCH_HOLE)
-    fallocate(targetFile_f, start, size)
+    fallocate.fallocate(targetFile_f, start, size, mode= fallocate.FALLOC_FL_PUNCH_HOLE | fallocate.FALLOC_FL_KEEP_SIZE)
+    fallocate.fallocate(targetFile_f, start, size, mode = 0)
 
 def defrag_func(targetFile_f, start, end):
     targetFile_f.seek(start, 0)
