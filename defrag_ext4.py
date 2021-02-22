@@ -1,10 +1,18 @@
 import sys
 import subprocess
 import os
+import fallocate
 
 def reallocation_func(target_file, start, size):
-    subprocess.check_call(["fallocate", "-p", "-o", str(start), "-l", str(size), str(target_file.name)])
-    subprocess.check_call(["fallocate", "-o", str(start), "-l", str(size), str(target_file.name)])
+
+#Previous naive version    
+#    subprocess.check_call(["fallocate", "-p", "-o", str(start), "-l", str(size), str(target_file.name)])
+#    subprocess.check_call(["fallocate", "-o", str(start), "-l", str(size), str(target_file.name)])
+
+#New Version
+    fallocate.fallocate(target_file, start, size, mode=fallocate.FALLOC_FL_PUNCH_HOLE | fallocate.FALLOC_FL_KEEP_SIZE)
+    fallocate.fallocate(target_file, start, size, mode=0)w
+
 
 defragsize=int(sys.argv[2])
 
