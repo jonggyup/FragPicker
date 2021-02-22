@@ -11,7 +11,7 @@ def reallocation_func(target_file, start, size):
 
 #New Version
     fallocate.fallocate(target_file, start, size, mode=fallocate.FALLOC_FL_PUNCH_HOLE | fallocate.FALLOC_FL_KEEP_SIZE)
-    fallocate.fallocate(target_file, start, size, mode=0)w
+    fallocate.fallocate(target_file, start, size, mode=0)
 
 
 defragsize=int(sys.argv[2])
