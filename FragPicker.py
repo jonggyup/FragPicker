@@ -8,10 +8,9 @@ def defrag_func(targetFile_f, start, end):
     data = targetFile_f.read(size)
     targetFile_f.seek(start, 0)
     targetFile_f.write(data)
-   
          
 
-filelist_f=open("./traces/filelist.txt", "r+")
+filelist_f=open("./analysis/filelist.txt", "r+")
 filename_lines = filelist_f.readlines()
 
 for filename_line in filename_lines:
@@ -22,20 +21,20 @@ for filename_line in filename_lines:
     filename = subprocess.check_output(["find", "/mnt", "-inum", filename_line.split()[0]]).decode('ascii').strip()
 
 
-    filefrag_f=open("./traces/frag_degree.txt", "w+")
+    filefrag_f=open("./analysis/frag_degree.txt", "w+")
     subprocess.check_call(["filefrag", "-v", filename], stdout=filefrag_f)
-    subprocess.check_call(["sed","-i","1,3d", "./traces/frag_degree.txt"])
-    subprocess.check_call(["sed","-i","$d", "./traces/frag_degree.txt"])
+    subprocess.check_call(["sed","-i","1,3d", "./analysis/frag_degree.txt"])
+    subprocess.check_call(["sed","-i","$d", "./analysis/frag_degree.txt"])
     os.fsync(filefrag_f.fileno())
 
     filefrag_f.close()
 
-    filefrag_f=open("./traces/frag_degree.txt", "r+")
+    filefrag_f=open("./analysis/frag_degree.txt", "r+")
     filefrag_f.seek(0)
     filefrag_lines = filefrag_f.readlines()
 
     targetFile_f = open(filename, "rb+")
-    targetRange_f = open("./traces/"+filename_line.split()[0]+".sorted", "r")
+    targetRange_f = open("./analysis/"+filename_line.split()[0]+".sorted", "r")
     targetRange = targetRange_f.readline()
     startRange = int(targetRange.split()[0])
     endRange = int(targetRange.split()[1])
