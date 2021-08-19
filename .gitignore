@@ -1,2 +1,6 @@
 *.result
 **/results
+*.merged
+*.sorted
+*.txt
+
