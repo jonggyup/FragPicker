@@ -100,6 +100,22 @@ e.g., ./view\_frag\_size.sh write Optane
 e.g., ./view\_distance.sh write Optane
 '''
 
+The results consist of value and the performance (MB/s)
+e.g., Read with varying frag\_size on Optane SSD
+Value          read\_exp
+4KB             723.864     |
+8KB             894.021     |
+16KB            1171.88     |
+32KB            1395.86     |
+64KB            1527.07     |
+128KB           1727.98     |
+256KB           1725.85     |
+512KB           1725.07     |
+1024KB          1727.06     |
+2048KB          1729.13     |
+4096KB          1725.82     |
+
+
 ### 3. Synthetic Evaluation
 '''
 evaluation/syntehtic/run.sh
