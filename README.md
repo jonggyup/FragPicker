@@ -1,5 +1,4 @@
-
-# FragPicker
+gPicker
 This repository contains scripts and source codes of FragPicker, which will appear at SOSP 2021.
 
 ## Overview
@@ -88,15 +87,15 @@ For write (takes 136 minutes)
 
 Note that, in the paper, we present only the results of the read benchmark as a form of figures.
 By default, the device name is configured as follows.
->Optane SSD ---> nvme1n1p1
->SATA Flash SSD ---> sdb1
->HDD ---> sde1
->MicroSD ---> sdf1
+>- Optane SSD -> nvme1n1p1
+>- SATA Flash SSD -> sdb1
+>- HDD -> sde1
+>- MicroSD -> sdf1
 
 The benchmark maybe needs the following storage free space
->1. Optane ---> around 210GB
->2. SSD ---> around 110GB
->3. HDD and MircoSD ---> around 35GB
+>- Optane -> around 210GB
+>- SSD -> around 110GB
+>- HDD and MircoSD -> around 35GB
 
 If your devices have insufficient free space, you can decrease the size of target files via the size variable.
 
@@ -108,10 +107,10 @@ To view the result of the experiments, conduct the following commands
 ./view_experiment_type.sh I/O type dev_type
 ```
 By default, the directory name for each dev is as follows.
->Optane SSD ---> Optane
->SATA Flash SSD ---> SSD
->HDD ---> HDD
->MicroSD ---> MicroSD
+>- Optane SSD -> Optane
+>- SATA Flash SSD -> SSD
+>- HDD -> HDD
+>- MicroSD -> MicroSD
 
 1. read with varying frag_size
 ```
@@ -139,31 +138,20 @@ e.g., ./view_distance.sh write Optane
  
 The results consist of value and the performance (MB/s)
 e.g., Read benchmark with varying frag_size on Optane SSD
-
+```
 Value          read_exp
-
 4KB             723.864     |
-
 8KB             894.021     |
-
 16KB            1171.88     |
-
 32KB            1395.86     |
-
 64KB            1527.07     |
-
 128KB           1727.98     |
-
 256KB           1725.85     |
-
 512KB           1725.07     |
-
 1024KB          1727.06     |
-
 2048KB          1729.13     |
-
 4096KB          1725.82     |
-
+```
 
 ### 3. Synthetic Evaluation
 The read workloads (Figure 8) perform sequential and stride read workloads on the three filesystems (ext4, f2fs, and btrfs). The current source codes conduct the experiments with Optane SSD and SATA Flash SSD.
@@ -174,9 +162,9 @@ make
 ./run_benchmark.sh
 ```
 The experiments measure throughput (MB/s), fragmentation state and write amount, after defragmentation.
->throughput ---> defragtool_read_after.result
->write amount ---> defragtool_btrace.trace
->frag. state ---> defragtool_frag_after.frag
+>- throughput -> defragtool_read_after.result
+>- write amount -> defragtool_btrace.trace
+>- frag. state -> defragtool_frag_after.frag
 
 These results will be saved in ./results/workload_name/device_type/filesystem/
 
