@@ -36,25 +36,25 @@ Storage
 
 ### Setup
 #### 1. Install dependencies
-'''
+```
 ./dep.sh
-'''
+```
 
 ### 2. Motivation Experiments
 Enter the motivation experiment directory.
-'''
+```
 cd evaluation/motivation
-'''
+```
 
 For read
-'''
+```
 ./read\_bench.sh
-'''
+```
 
 For write
-'''
+```
 ./write\_bench.sh
-'''
+```
 
 Note that, in the paper, we present only the results of the read benchmark as a form of figures.
 By default, the device name is configured as follows.
@@ -73,32 +73,32 @@ HDD --> HDD
 MicroSD --> MicroSD
 
 1. read with varying frag\_size
-'''
+```
 ./view\_frag\_size.sh read dev\_type (directory name)
-'''
+```
 e.g., ./view\_frag\_size.sh read Optane
-'''
+```
 
 2. read with varying frag\_distance
-'''
+```
 ./view\_distance.sh read dev\_type
-'''
+```
 e.g., ./view\_distance.sh read Optane
-'''
+```
 
 3. write with varying frag\_size
-'''
+```
 ./view\_frag\_size.sh write dev\_type
-'''
+```
 e.g., ./view\_frag\_size.sh write Optane
-'''
+```
 
 4. write with varying frag\_distance
-'''
+```
 ./view\_distance.sh write dev\_type
-'''
+```
 e.g., ./view\_distance.sh write Optane
-'''
+```
 
 The results consist of value and the performance (MB/s)
 e.g., Read with varying frag\_size on Optane SSD
@@ -117,9 +117,9 @@ Value          read\_exp
 
 
 ### 3. Synthetic Evaluation
-'''
+```
 evaluation/syntehtic/run.sh
-'''
+```
 
 
 *Supported by SWStarlab
