@@ -191,8 +191,9 @@ To view the results in a nicer way, run the following commands,
 ```
 cd evaluation/synthetic_read
 ./view_results.sh $workload $device_type
-e.g., ./view_result.sh stride Optane
 ```
+e.g., ./view_result.sh stride Optane ($workload is either sequential or stride)
+
 The results will be displayed like below.
 
 e.g., Sequential Read benchmark on Optane SSD
