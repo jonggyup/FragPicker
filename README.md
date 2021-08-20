@@ -93,6 +93,7 @@ For write (takes 136 minutes)
 ```
 
 Note that, in the paper, we present only the results of the read benchmark as a form of figures.
+
 By default, the device name is configured as follows.
 >- Optane SSD -> nvme1n1p1
 >- SATA Flash SSD -> sdb1
@@ -164,7 +165,9 @@ Value          read_exp
 ### 3. Evaluation
 #### 3-1. Read benchmark
 The read workloads (Figure 8, 9) perform sequential and stride read workloads on the three filesystems (ext4, f2fs, and btrfs). The current source codes conduct the experiments with Optane SSD and SATA Flash SSD.
+
 To execute, enter the synthetic experiment directory and run the following commands.
+
 Since we also measure the write amount using blktrace, no other applications should run at the same time.
 ```
 cd evaluation/read_benchmark
@@ -180,6 +183,7 @@ The experiments measure throughput (MB/s), fragmentation state and write amount,
 >- frag. state -> $$$_frag_after.frag
 
 These results will be saved in ./results/workload_name/device_type/filesystem/
+
 Note that you may encouter an error like "./run_benchmark.sh: line 123: kill: (9431) - No such process", but you can just ignore this.
 
 

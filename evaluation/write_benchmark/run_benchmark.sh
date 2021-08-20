@@ -135,9 +135,9 @@ do
 			#Workloads
 			$command /mnt/2 $ra_size > /dev/null
 
-			sleep 3
-			kill -INT $trace_id
-			sleep 5
+#			sleep 3
+#			kill -INT $trace_id
+			sleep 10
 			kill $(pgrep trace)
 			(cd $path/analysis && ./parse.sh) #Parsing monitored I/Os
 			(cd $path/analysis && python3 ./processing.py) #per-file Analysis
