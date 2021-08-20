@@ -25,7 +25,7 @@ do
 		var1=$(echo $i | cut -d.  -f2)
 		if [ "$var1" == "trace" ]; then
 			file=$(echo $i | cut -d. -f 1)
-			value=$(cat $base_dir/$file.trace | tail -11 | grep "Write Dispatches" | awk '{print $8}')
+			value=$(cat $base_dir/$file.trace | tail -14 | grep "Write Dispatches" | awk '{print $8}')
 		else
 			file=$(echo $i | cut -d. -f 1)
 			value=$(cat $base_dir/$file.result | awk '{print $3}')
@@ -40,7 +40,7 @@ do
 			var1=$(echo $i | cut -d.  -f2)
 			if [ "$var1" == "trace" ]; then
 				file=$(echo $i | cut -d. -f 1)
-				value=$(cat $base_dir/$file.trace | tail -11 | grep "Write Dispatches" | awk '{print $8}')
+				value=$(cat $base_dir/$file.trace | tail -14 | grep "Write Dispatches" | awk '{print $8}')
 			else
 				file=$(echo $i | cut -d. -f 1)
 				value=$(cat $base_dir/$file.result | awk '{print $3}')

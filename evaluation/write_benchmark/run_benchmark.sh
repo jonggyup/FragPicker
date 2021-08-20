@@ -19,7 +19,7 @@ do
 			;;
 	esac
 	#Similar to the motivational experiments, needs to change the device name and the path to the corresponding ones
-	for dev in nvme1n1p1 #sdb1 #sde1 sdf1
+	for dev in sdb1 #nvme1n1p1 #sdb1 #sde1 sdf1
 	do
 		case $dev in
 			nvme1n1p1)
@@ -41,12 +41,10 @@ do
 		esac
 		mkdir $base_dir
 
-		for filesystem in btrfs #ext4 f2fs btrfs
+		for filesystem in ext4 f2fs btrfs
 		do
 			result_path=$base_dir/$filesystem
 			mkdir $result_path
-			frag_unit=4
-			distance=4
 			let counts=$size*1024/256
 			umount /mnt
 			../tools/mount.sh $dev /mnt/ $filesystem #mount point is /mnt
@@ -59,10 +57,10 @@ do
 			#This performs 32 4k writes and 128 writes to each file
 			while (( --counts >= 0 )); do
 				while (( --sub_counts >= 0 )); do
-					dd if=/dev/zero of=/mnt/1 count=1 bs=${frag_unit}K oflag=direct,append conv=notrunc &> /dev/null
-					dd if=/dev/zero of=/mnt/2 count=1 bs=${frag_unit}K oflag=direct,append conv=notrunc &> /dev/null
-					dd if=/dev/zero of=/mnt/3 count=1 bs=${frag_unit}K oflag=direct,append conv=notrunc &> /dev/null
-					dd if=/dev/zero of=/mnt/4 count=1 bs=${frag_unit}K oflag=direct,append conv=notrunc &> /dev/null
+					dd if=/dev/zero of=/mnt/1 count=1 bs=4K oflag=direct,append conv=notrunc &> /dev/null
+					dd if=/dev/zero of=/mnt/2 count=1 bs=4K oflag=direct,append conv=notrunc &> /dev/null
+					dd if=/dev/zero of=/mnt/3 count=1 bs=4K oflag=direct,append conv=notrunc &> /dev/null
+					dd if=/dev/zero of=/mnt/4 count=1 bs=4K oflag=direct,append conv=notrunc &> /dev/null
 
 				done
 				dd if=/dev/zero of=/mnt/1 count=1 bs=128K oflag=direct,append conv=notrunc &> /dev/null
@@ -111,7 +109,7 @@ do
 
 			#Perform FragPicker with the bypass option
 			(cd $path/migration && ./FragPicker_bypass.sh /mnt/1 128)
-			../tools/cacheflush.sh
+			
 			sleep 10
 			kill $(pgrep blktrace)
 
@@ -155,7 +153,6 @@ do
 
 			(cd $path/migration && ./FragPicker.sh)
 			
-			../tools/cacheflush.sh
 			sleep 10
 			kill $(pgrep blktrace)
 
@@ -190,7 +187,6 @@ do
 					;;
 			esac
 
-			../tools/cacheflush.sh
 			sleep 10
 			kill $(pgrep blktrace)
 
@@ -206,7 +202,7 @@ do
 			if [[ "$filesystem" == "btrfs" ]]; then
 				btrace /dev/$dev -a issue &> $result_path/conv_t_btrace.trace &
 				btrfs filesystem defragment -t 128K -f /mnt/4
-				sleep 5
+				sleep 10
 				kill $(pgrep blktrace)
 
 				filefrag -v /mnt/4 > $result_path/conv_t_frag_after.frag

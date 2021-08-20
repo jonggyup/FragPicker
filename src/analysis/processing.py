@@ -26,6 +26,7 @@ for line in lines:
     start = int(req_info[2]) #Extract start offset
     end = int(req_info[2]) + int(req_info[1]) - 1 #Extract end offset
     direct = int(req_info[3]) #Extract whether O_DIRECT or not (if O_DIRECT, direct is 16384)
+    RW_type = int(req_info[4])
     
     #Adjust the request with filesystem blocks
     if start % 4096 != 0:
@@ -35,7 +36,7 @@ for line in lines:
 
     #Check if this is sequential read for the readahead mechanism
     #Check if it is O_DIRECT (Direct = 16384 when O_DIRECT)
-    if fileNo in perfile_ReqEnd and start == perfile_ReqEnd[fileNo] + 1 and direct == 0:
+    if fileNo in perfile_ReqEnd and start == perfile_ReqEnd[fileNo] + 1 and direct == 0 and RW_type == 0:
         perfile_ReqEnd[fileNo] = end
         
         #If this request is in the readahead window, ignore this one since this range is already absorbed by the readahead mechanism

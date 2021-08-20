@@ -174,8 +174,7 @@ cd evaluation/read_benchmark
 make
 ./run_benchmark.sh
 ```
-./run_benchmark.sh for only Optane SSD takes 94m31.550s in our machine.
-
+./run_benchmark.sh for only Optane SSD and Flash SSD takes 94m31.550s and 43m24.246s, respectively, in our machine.
 
 The experiments measure throughput (MB/s), fragmentation state and write amount, after defragmentation.
 >- throughput -> $$$_perf_after.result
@@ -184,7 +183,7 @@ The experiments measure throughput (MB/s), fragmentation state and write amount,
 
 These results will be saved in ./results/workload_name/device_type/filesystem/
 
-Note that you may encouter an error like "./run_benchmark.sh: line 123: kill: (9431) - No such process", but you can just ignore this.
+Note that if you encouter an error like "./run_benchmark.sh: line 123: kill: (9431) - No such process", you can just ignore this.
 
 
 To view the results in a nicer way, run the following commands,
@@ -203,10 +202,9 @@ ext4                 990.052         |  1758.70         |  1809.15         |  18
 f2fs                 987.095         |  1723.71         |  1723.60         |  1729.02         |  527368K         |  525320K         |  1052MiB         |
 btrfs                435.707         |  877.273         |  882.680         |  933.656         |  528720K         |  525172K         |  1101MiB         |  886.660     |  532460K     |
 ```
+Here, $$$_perf means the throughput (MB/s), and $$$_write means the amount of writes.
 
-
-
-
+Conv-T is btrfs.defragment with the optimization. Therefore, ext4 and f2fs do not have the value.
 
 
 
@@ -219,8 +217,6 @@ cd evaluation/write_benchmark
 make
 ./run_benchmark.sh
 ```
-./run_benchmark.sh for only Optane SSD takes ---- in our machine.
-
 
 To view the results in a nicer way, run the following commands,
 ```
@@ -229,7 +225,7 @@ cd evaluation/synthetic_read
 e.g., ./view_result.sh stride Optane
 ```
 
-### Troubleshoots
+### Tips for errors
 
 >Error 1: ModuleNotFoundError: No module named 'distutils.core' 
 ```

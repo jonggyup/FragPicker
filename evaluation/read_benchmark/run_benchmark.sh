@@ -45,8 +45,6 @@ do
 		do
 			result_path=$base_dir/$filesystem
 			mkdir $result_path
-			frag_unit=4
-			distance=4
 			let counts=$size*1024/256
 			umount /mnt
 			../tools/mount.sh $dev /mnt/ $filesystem #mount point is /mnt
@@ -59,10 +57,10 @@ do
 			#This performs 32 4k writes and 128 writes to each file
 			while (( --counts >= 0 )); do
 				while (( --sub_counts >= 0 )); do
-					dd if=/dev/zero of=/mnt/1 count=1 bs=${frag_unit}K oflag=direct,append conv=notrunc &> /dev/null
-					dd if=/dev/zero of=/mnt/2 count=1 bs=${frag_unit}K oflag=direct,append conv=notrunc &> /dev/null
-					dd if=/dev/zero of=/mnt/3 count=1 bs=${frag_unit}K oflag=direct,append conv=notrunc &> /dev/null
-					dd if=/dev/zero of=/mnt/4 count=1 bs=${frag_unit}K oflag=direct,append conv=notrunc &> /dev/null
+					dd if=/dev/zero of=/mnt/1 count=1 bs=4K oflag=direct,append conv=notrunc &> /dev/null
+					dd if=/dev/zero of=/mnt/2 count=1 bs=4K oflag=direct,append conv=notrunc &> /dev/null
+					dd if=/dev/zero of=/mnt/3 count=1 bs=4K oflag=direct,append conv=notrunc &> /dev/null
+					dd if=/dev/zero of=/mnt/4 count=1 bs=4K oflag=direct,append conv=notrunc &> /dev/null
 
 				done
 				dd if=/dev/zero of=/mnt/1 count=1 bs=128K oflag=direct,append conv=notrunc &> /dev/null

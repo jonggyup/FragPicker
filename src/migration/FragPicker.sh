@@ -10,5 +10,5 @@ else
 	(cd $path && python3 ./FragPicker_OP.py) #out-place update filesystems do not need block allocaiton.
 fi
 
-#(cd $path && cd ../analysis && ./remove.sh) #On successful defragmentaiton, remove the profiled data.
+(cd $path && cd ../analysis && ./remove.sh) #On successful defragmentaiton, remove the profiled data.
 #The profiled data is acculmalted. Make sure deletion of the data before beginning a new experiment.

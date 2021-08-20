@@ -1,7 +1,7 @@
 #!/bin/bash
 #$1 is the type of workload $2 device
 
-array=(read_before.result fragpicker_bypass_read_after.result fragpicker_read_after.result conv_read_after.result fragpicker_bypass_btrace.trace fragpicker_btrace.trace conv_btrace.trace)
+array=(perf_before.result fragpicker_bypass_perf_after.result fragpicker_perf_after.result conv_perf_after.result fragpicker_bypass_btrace.trace fragpicker_btrace.trace conv_btrace.trace)
 naming=(baseline_perf FragPicker-B_perf FragPicker_perf Conv_perf FragPicker-B_write FragPicker_write Conv_write Conv-T_perf Conv-T_write)
 printf "%8s" $1 "    "
 for i in "${naming[@]}"
@@ -25,7 +25,7 @@ do
 		var1=$(echo $i | cut -d.  -f2)
 		if [ "$var1" == "trace" ]; then
 			file=$(echo $i | cut -d. -f 1)
-			value=$(cat $base_dir/$file.trace | tail -11 | grep "Write Dispatches" | awk '{print $8}')
+			value=$(cat $base_dir/$file.trace | tail -14 | grep "Write Dispatches" | awk '{print $8}')
 		else
 			file=$(echo $i | cut -d. -f 1)
 			value=$(cat $base_dir/$file.result | awk '{print $3}')
@@ -35,12 +35,12 @@ do
 
 	done
 	if [[ "$filesystem" == "btrfs" ]]; then
-		for i in conv_t_read_after.result conv_t_btrace.trace
+		for i in conv_t_perf_after.result conv_t_btrace.trace
 		do
 			var1=$(echo $i | cut -d.  -f2)
 			if [ "$var1" == "trace" ]; then
 				file=$(echo $i | cut -d. -f 1)
-				value=$(cat $base_dir/$file.trace | tail -11 | grep "Write Dispatches" | awk '{print $8}')
+				value=$(cat $base_dir/$file.trace | tail -14 | grep "Write Dispatches" | awk '{print $8}')
 			else
 				file=$(echo $i | cut -d. -f 1)
 				value=$(cat $base_dir/$file.result | awk '{print $3}')
