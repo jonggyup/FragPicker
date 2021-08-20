@@ -1,4 +1,5 @@
-gPicker
+
+# FragPicker
 This repository contains scripts and source codes of FragPicker, which will appear at SOSP 2021.
 
 ## Overview
@@ -15,10 +16,12 @@ To address this, FragPicker analyzes the I/O activities of applications and migr
 	- src/analysis/processing.py: per-file analysis
 	- src/analysis/merge.py: the overlap I/O merging in the per-file analysis
 	- src/analysis/hotness.sh: hotness filtering
-	- src/migration/FragPicker.py: the migration phase of FragPicker for out-place update filesystems (e.g., F2FS, Btrfs)
+	- src/migration/FragPicker_OP.py: the migration phase of FragPicker for out-place update filesystems (e.g., F2FS, Btrfs)
 	- src/migration/FragPicker_IP.py: the migration phase of FragPicker for in-place update filesystems (e.g., Ext4)
-	- src/migration/FragPicker_bypass.py: the bypass version of FragPicker for out-place update filesystems
+	- src/migration/FragPicker_bypass_OP.py: the bypass version of FragPicker for out-place update filesystems
 	- src/migration/FragPicker_bypass_IP.py: the bypass version of FragPicker for in-plcae update filesystems
+	- src/migration/FragPicker.sh: the execution file of FragPicker migration
+	- src/migration/FragPicker_bypass.sh: the execution file of FragPicker migration with bypass
 	- src/migration/defrag_all.py: migration of the entire contents like conventional tools
 
 * Evaluation
@@ -188,5 +191,8 @@ sudo apt install python3-distutils
 apt install python3-pip  
 pip3 install fallocate
 ```
-*Supported by SWStarlab
+
+
+#### Acknowledgement 
+This work was supported by Institute of Information & communications Technology Planning & Evaluation (IITP) grant funded by the Korea government(MSIT) (IITP-2015-0-00284, (SW Starlab) Development of UX Platform Software for Supporting Concurrent Multi-users on Large Displays)
 

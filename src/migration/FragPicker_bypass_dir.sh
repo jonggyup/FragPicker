@@ -10,9 +10,9 @@ walk_dir () {
 			walk_dir "$pathname"
 		else
 			if [[ "$filesystem" == "ext4" ]]; then
-				(cd $path && python3 ./FragPicker_bypass_IP.sh $pathname 128)
+				(cd $path && python3 ./FragPicker_bypass_IP.py $pathname 128)
 			else
-				(cd $path && python3 ./FragPicker_bypass_OP.sh $pathname 128)
+				(cd $path && python3 ./FragPicker_bypass_OP.py $pathname 128)
 			fi
 		fi
 	done

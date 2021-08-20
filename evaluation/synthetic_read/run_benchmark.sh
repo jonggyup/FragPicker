@@ -98,7 +98,7 @@ do
 			btrace /dev/$dev -a issue &> $result_path/fragpicker_bypass_btrace.trace &
 
 			#Perform FragPicker with the bypass option
-			(cd $path && ./FragPicker_bypass.sh /mnt/1 128)
+			(cd $path/migration && ./FragPicker_bypass.sh /mnt/1 128)
 
 			sleep 5
 			kill $(pgrep blktrace)
@@ -118,19 +118,19 @@ do
 			$command /mnt/2 $ra_size > /dev/null
 
 			sleep 3
-			kill -INT $id
+			kill -INT $trace_id
 			sleep 5
 			kill $(pgrep trace)
-			./parse.sh #Parsing monitored I/Os
-			python3 ./processing.py #per-file Analysis
-			python3 ./merge.py #merging overlapped I/os
-			./hotness.sh 100 #hotness filetering. Here, Hotness is 100%
+			(cd $path/analysis && ./parse.sh) #Parsing monitored I/Os
+			(cd $path/analysis && python3 ./processing.py) #per-file Analysis
+			(cd $path/analysis && python3 ./merge.py) #merging overlapped I/os
+			(cd $path/analysis && ./hotness.sh 100) #hotness filetering. Here, Hotness is 100%
 			#Analysis completed.
 
 			#measure the write amount in the block layer
 			btrace /dev/$dev -a issue &> $result_path/fragpicker_btrace.trace &
 
-			(cd $path && ./FragPicker.sh)
+			(cd $path/migration && ./FragPicker.sh)
 
 			kill $(pgrep blktrace)
 
@@ -151,7 +151,7 @@ do
 					e4defrag /mnt/3
 					;;
 				f2fs)
-					(cd $path && python3 ./migrate_all.py /mnt/3 1024)
+					(cd $path/migration && python3 ./migrate_all.py /mnt/3 1024)
 					;;
 				btrfs)
 					btrfs filesystem defragment -f /mnt/3
