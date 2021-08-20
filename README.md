@@ -144,6 +144,7 @@ e.g., ./view_frag_size.sh write Optane
 e.g., ./view_distance.sh write Optane
  
 The results consist of value and the performance (MB/s)
+
 e.g., Read benchmark with varying frag_size on Optane SSD
 ```
 Value          read_exp
@@ -189,6 +190,9 @@ cd evaluation/synthetic_read
 e.g., ./view_result.sh stride Optane
 ```
 The results will be displayed like below.
+
+e.g., Sequential Read benchmark on Optane SSD
+
 ```
 sequential        baseline_perf     FragPicker-B_perf     FragPicker_perf     Conv_perf     FragPicker-B_write     FragPicker_write     Conv_write     Conv-T_perf     Conv-T_write
 ext4                 990.052         |  1758.70         |  1809.15         |  1856.67         |  541976K         |  530900K         |  1057MiB         |
