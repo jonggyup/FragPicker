@@ -1,7 +1,7 @@
 #!/bin/bash
 #$1 is process name
 
-percentage=100 #$1 #Extract the top x% of the requests
+percentage=$1 #$1 #Extract the top x% of the requests
 division=100
 
 while IFS= read -r line

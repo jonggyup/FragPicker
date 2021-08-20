@@ -42,8 +42,10 @@ main(int argc, char *argv[])
 		numRead = read(fd, buf, size);
 		totalnumRead += numRead;
 
-		if (numRead == -1)
-			printf("read\n");
+		if (numRead == -1) {
+			printf("Error\n");
+			return 0;
+		}
 		lseek(fd, 1024*288, SEEK_CUR);
 
 	}

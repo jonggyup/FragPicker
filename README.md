@@ -1,4 +1,5 @@
 
+
 # FragPicker
 This repository contains scripts and source codes of FragPicker, which will appear at SOSP 2021.
 
@@ -158,12 +159,12 @@ Value          read_exp
 ```
 
 ### 3. Evaluation
-#### 3-1. Read workload
-The read workloads (Figure 8) perform sequential and stride read workloads on the three filesystems (ext4, f2fs, and btrfs). The current source codes conduct the experiments with Optane SSD and SATA Flash SSD.
+#### 3-1. Read benchmark
+The read workloads (Figure 8, 9) perform sequential and stride read workloads on the three filesystems (ext4, f2fs, and btrfs). The current source codes conduct the experiments with Optane SSD and SATA Flash SSD.
 To execute, enter the synthetic experiment directory and run the following commands.
 Since we also measure the write amount using blktrace, no other applications should run at the same time.
 ```
-cd evaluation/synthetic_read
+cd evaluation/read_benchmark
 make
 ./run_benchmark.sh
 ```
@@ -171,15 +172,12 @@ make
 
 
 The experiments measure throughput (MB/s), fragmentation state and write amount, after defragmentation.
->- throughput -> $$$_read_after.result
+>- throughput -> $$$_perf_after.result
 >- write amount -> $$$_btrace.trace
 >- frag. state -> $$$_frag_after.frag
 
 These results will be saved in ./results/workload_name/device_type/filesystem/
 Note that you may encouter an error like "./run_benchmark.sh: line 123: kill: (9431) - No such process", but you can just ignore this.
-
-
-
 
 
 To view the results in a nicer way, run the following commands,
@@ -188,8 +186,38 @@ cd evaluation/synthetic_read
 ./view_results.sh $workload $device_type
 e.g., ./view_result.sh stride Optane
 ```
+The results will be displayed like below.
+```
+sequential        baseline_perf     FragPicker-B_perf     FragPicker_perf     Conv_perf     FragPicker-B_write     FragPicker_write     Conv_write     Conv-T_perf     Conv-T_write
+ext4                 990.052         |  1758.70         |  1809.15         |  1856.67         |  541976K         |  530900K         |  1057MiB         |
+f2fs                 987.095         |  1723.71         |  1723.60         |  1729.02         |  527368K         |  525320K         |  1052MiB         |
+btrfs                435.707         |  877.273         |  882.680         |  933.656         |  528720K         |  525172K         |  1101MiB         |  886.660     |  532460K     |
+```
 
 
+
+
+
+
+
+#### 3-2. Write benchmark
+The write workloads (Figure 8, 9) perform sequential and stride write workloads on the three filesystems (ext4, f2fs, and btrfs). The current source codes conduct the experiments with Optane SSD and SATA Flash SSD.
+To execute, enter the synthetic experiment directory and run the following commands.
+Since we also measure the write amount using blktrace, no other applications should run at the same time.
+```
+cd evaluation/write_benchmark
+make
+./run_benchmark.sh
+```
+./run_benchmark.sh for only Optane SSD takes ---- in our machine.
+
+
+To view the results in a nicer way, run the following commands,
+```
+cd evaluation/synthetic_read
+./view_results.sh $workload $device_type
+e.g., ./view_result.sh stride Optane
+```
 
 ### Troubleshoots
 
@@ -204,7 +232,9 @@ apt install python3-pip
 pip3 install fallocate
 ```
 
-
+<!--
 #### Acknowledgement 
-This work was supported by Institute of Information & communications Technology Planning & Evaluation (IITP) grant funded by the Korea government(MSIT) (IITP-2015-0-00284, (SW Starlab) Development of UX Platform Software for Supporting Concurrent Multi-users on Large Displays)
+This work was supported by Institute of Information & communications Technology Planning & Evaluation (IITP) grant funded by the Korea government(MSIT) (IITP-2015-0-00284, (SW Starlab) Development of UX Platform Software for Supporting Concurrent Multi-users on Large Displays)-->
+
+
 

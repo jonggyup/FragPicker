@@ -101,8 +101,8 @@ do
 
 			#Perform FragPicker with the bypass option
 			(cd $path/migration && ./FragPicker_bypass.sh /mnt/1 128)
-			../tools/cacheflush.sh
-#			sleep 10
+#			../tools/cacheflush.sh
+			sleep 10
 			kill $(pgrep blktrace)
 
 			filefrag -v /mnt/1 > $result_path/fragpicker_bypass_frag_after.frag
@@ -119,9 +119,9 @@ do
 			#Workloads
 			$command /mnt/2 $ra_size > /dev/null
 
-			sleep 3
-			kill -INT $trace_id
-			sleep 5
+#			sleep 5
+#			kill -INT $trace_id
+			sleep 10
 			kill $(pgrep trace)
 			(cd $path/analysis && ./parse.sh) #Parsing monitored I/Os
 			(cd $path/analysis && python3 ./processing.py) #per-file Analysis
@@ -182,7 +182,7 @@ do
 				kill $(pgrep blktrace)
 
 				filefrag -v /mnt/4 > $result_path/conv_t_frag_after.frag
-#				../tools/cacheflush.sh
+				../tools/cacheflush.sh
 				sleep 4
 
 				$command /mnt/4 $ra_size > $result_path/conv_t_read_after.result
