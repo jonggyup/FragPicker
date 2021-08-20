@@ -124,29 +124,29 @@ By default, the directory name for each dev is as follows.
 ```
 ./view_frag_size.sh read dev_type (directory name)
 ```
-e.g., ./view_frag_size.sh read Optane
+> e.g., ./view_frag_size.sh read Optane
 
 2. read with varying frag_distance
 ```
 ./view_distance.sh read dev_type
 ```
-e.g., ./view_distance.sh read Optane
+> e.g., ./view_distance.sh read Optane
 
 3. write with varying frag_size
 ```
 ./view_frag_size.sh write dev_type
 ```
-e.g., ./view_frag_size.sh write Optane
+> e.g., ./view_frag_size.sh write Optane
 
 4. write with varying frag_distance
 ```
 ./view_distance.sh write dev_type
 ```
-e.g., ./view_distance.sh write Optane
+> e.g., ./view_distance.sh write Optane
  
 The results consist of value and the performance (MB/s)
 
-e.g., Read benchmark with varying frag_size on Optane SSD
+> e.g., Read benchmark with varying frag_size on Optane SSD
 ```
 Value          read_exp
 4KB             723.864     |
@@ -192,11 +192,11 @@ To view the results in a nicer way, run the following commands,
 cd evaluation/synthetic_read
 ./view_results.sh $workload $device_type
 ```
-e.g., ./view_result.sh stride Optane ($workload is either sequential or stride)
+> e.g., ./view_result.sh stride Optane ($workload is either sequential or stride)
 
 The results will be displayed like below.
 
-e.g., Sequential Read benchmark on Optane SSD
+> e.g., Sequential Read benchmark on Optane SSD
 
 ```
 sequential        baseline_perf     FragPicker-B_perf     FragPicker_perf     Conv_perf     FragPicker-B_write     FragPicker_write     Conv_write     Conv-T_perf     Conv-T_write
@@ -224,8 +224,9 @@ To view the results in a nicer way, run the following commands,
 ```
 cd evaluation/synthetic_read
 ./view_results.sh $workload $device_type
-e.g., ./view_result.sh stride Optane
 ```
+> e.g., ./view_result.sh stride Optane
+
 
 ### Tips for errors
 
