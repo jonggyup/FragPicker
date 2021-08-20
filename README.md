@@ -29,6 +29,7 @@ To address this, FragPicker analyzes the I/O activities of applications and migr
 	- evaluation/motivation: the motivational evaluation
 	- evaluation/read_benchmark: the read evaluation
 	- evaluation/write_benchmark: the write evaluation
+	- evaluation/tools: tools for evaluation
 
 ## Experiments
 ### Tested Environment
@@ -41,7 +42,8 @@ We use Ubuntu 18.04 LTS with Linux Kernel 5.7.0
 >4) NVMe SSD: Intel NVMe Optane SSD 905P 960GB
 
 ### 1. Evaluation Setup
-The evaluation source codes are written under an assumption that the mount point is /mnt without interference with other application. Therefore, the evaluation codes will umount and mount /mnt. Therefore, we hope you make sure nothing important is in /mnt. Also, the experiments should be performed with sudo.
+***Warning***
+The evaluation source codes are written under an assumption that the mount point is /mnt without interference with other application. Therefore, the evaluation codes will continuously umount and mount /mnt. Therefore, we hope you make sure nothing important is in /mnt. Also, the experiments should be performed with sudo.
 #### 1-1. Install dependencies
 ```
 ./dep.sh

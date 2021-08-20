@@ -45,8 +45,10 @@ main(int argc, char *argv[])
 	while (offset + size < fileSize ) {
 		numWrite += write(fd, buf, size);
 
-		if (numWrite == -1)
+		if (numWrite == -1) {
 			printf("Write Error\n");
+			return 0;
+		}
 
 		offset = lseek(fd, 1024*288, SEEK_CUR);
 	}

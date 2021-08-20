@@ -4,7 +4,7 @@ base_startbase_dir=./results
 ra_size=128
 path=../../src
 
-for workloads in read_stride #read_seq read_stride
+for workloads in read_seq read_stride
 do
 	case $workloads in
 		read_seq)
@@ -19,7 +19,7 @@ do
 			;;
 	esac
 	#Similar to the motivational experiments, needs to change the device name and the path to the corresponding ones
-	for dev in nvme1n1p1 #sdb1 #sde1 sdf1 #sdg1
+	for dev in sdb1 #nvme1n1p1 #sdb1 #sde1 sdf1 #sdg1
 	do
 		case $dev in
 			nvme1n1p1)
@@ -41,7 +41,7 @@ do
 		esac
 		mkdir $base_dir
 
-		for filesystem in btrfs #ext4 f2fs btrfs
+		for filesystem in ext4 f2fs btrfs
 		do
 			result_path=$base_dir/$filesystem
 			mkdir $result_path
@@ -93,7 +93,7 @@ do
 			../tools/cacheflush.sh
 
 			#Measure the performance
-			$command /mnt/1 $ra_size > $result_path/read_before.result
+			$command /mnt/1 $ra_size > $result_path/perf_before.result
 
 			#Begin the experiments with FragPicker_bypass
 			#measure the write amount in the block layer
@@ -101,14 +101,13 @@ do
 
 			#Perform FragPicker with the bypass option
 			(cd $path/migration && ./FragPicker_bypass.sh /mnt/1 128)
-#			../tools/cacheflush.sh
 			sleep 10
 			kill $(pgrep blktrace)
 
 			filefrag -v /mnt/1 > $result_path/fragpicker_bypass_frag_after.frag
 			../tools/cacheflush.sh
 			sleep 4
-			$command /mnt/1 $ra_size > $result_path/fragpicker_bypass_read_after.result
+			$command /mnt/1 $ra_size > $result_path/fragpicker_bypass_perf_after.result
 
 			#begin the experiments with FragPicker
 			#Analysis phase begins
@@ -134,7 +133,6 @@ do
 
 			(cd $path/migration && ./FragPicker.sh)
 			
-#			../tools/cacheflush.sh
 			sleep 10
 			kill $(pgrep blktrace)
 
@@ -144,7 +142,7 @@ do
 			sleep 4
 
 			#measure the performance
-			$command /mnt/2 $ra_size > $result_path/fragpicker_read_after.result
+			$command /mnt/2 $ra_size > $result_path/fragpicker_perf_after.result
 
 
 			#begin the experiments with conventional tools 
@@ -162,7 +160,6 @@ do
 					;;
 			esac
 
-#			../tools/cacheflush.sh
 			sleep 10
 			kill $(pgrep blktrace)
 
@@ -171,21 +168,21 @@ do
 			sleep 4
 
 			#measure the performance
-			$command /mnt/3 $ra_size > $result_path/conv_read_after.result
+			$command /mnt/3 $ra_size > $result_path/conv_perf_after.result
 
 
 			#In the case of btrfs, performs one more with the optimization
 			if [[ "$filesystem" == "btrfs" ]]; then
 				btrace /dev/$dev -a issue &> $result_path/conv_t_btrace.trace &
 				btrfs filesystem defragment -t 128K -f /mnt/4
-				sleep 5
+				sleep 10
 				kill $(pgrep blktrace)
 
 				filefrag -v /mnt/4 > $result_path/conv_t_frag_after.frag
 				../tools/cacheflush.sh
 				sleep 4
 
-				$command /mnt/4 $ra_size > $result_path/conv_t_read_after.result
+				$command /mnt/4 $ra_size > $result_path/conv_t_perf_after.result
 			fi
 		done
 	done

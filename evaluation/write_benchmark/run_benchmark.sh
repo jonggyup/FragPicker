@@ -81,6 +81,11 @@ do
 				python3 ../tools/fragmentor_ext4.py /mnt/2
 				python3 ../tools/fragmentor_ext4.py /mnt/3
 			fi
+			
+			#Enable in-place update of f2fs
+			if [[ "$filesystem" == "f2fs" ]]; then
+				echo 16 > /sys/fs/f2fs/$dev/ipu_policy
+			fi
 
 			../tools/cacheflush.sh
 
@@ -99,6 +104,11 @@ do
 			#measure the write amount in the block layer
 			btrace /dev/$dev -a issue &> $result_path/fragpicker_bypass_btrace.trace &
 
+			#disable in-place update of f2fs
+			if [[ "$filesystem" == "f2fs" ]]; then
+				echo 4 > /sys/fs/f2fs/$dev/ipu_policy
+			fi
+
 			#Perform FragPicker with the bypass option
 			(cd $path/migration && ./FragPicker_bypass.sh /mnt/1 128)
 			../tools/cacheflush.sh
@@ -107,6 +117,12 @@ do
 
 			filefrag -v /mnt/1 > $result_path/fragpicker_bypass_frag_after.frag
 			../tools/cacheflush.sh
+
+			#enable in-place update of f2fs
+			if [[ "$filesystem" == "f2fs" ]]; then
+				echo 16 > /sys/fs/f2fs/$dev/ipu_policy
+			fi
+
 			sleep 4
 			$command /mnt/1 $ra_size > $result_path/fragpicker_bypass_perf_after.result
 
@@ -132,6 +148,11 @@ do
 			#measure the write amount in the block layer
 			btrace /dev/$dev -a issue &> $result_path/fragpicker_btrace.trace &
 
+			#disable in-place update of f2fs
+			if [[ "$filesystem" == "f2fs" ]]; then
+				echo 4 > /sys/fs/f2fs/$dev/ipu_policy
+			fi
+
 			(cd $path/migration && ./FragPicker.sh)
 			
 			../tools/cacheflush.sh
@@ -139,6 +160,11 @@ do
 			kill $(pgrep blktrace)
 
 			filefrag -v /mnt/2 > $result_path/fragpicker_frag_after.frag
+
+			#enable in-place update of f2fs
+			if [[ "$filesystem" == "f2fs" ]]; then
+				echo 16 > /sys/fs/f2fs/$dev/ipu_policy
+			fi
 
 			../tools/cacheflush.sh
 			sleep 4
@@ -155,7 +181,9 @@ do
 					e4defrag /mnt/3
 					;;
 				f2fs)
+					echo 4 > /sys/fs/f2fs/$dev/ipu_policy
 					(cd $path/migration && python3 ./migrate_all.py /mnt/3 1024) #F2FS doesn't have user-friendly defragmenter. So, we just migrate the entire contents into a new area, similarly to other defragmenters
+					echo 16 > /sys/fs/f2fs/$dev/ipu_policy
 					;;
 				btrfs)
 					btrfs filesystem defragment -f /mnt/3

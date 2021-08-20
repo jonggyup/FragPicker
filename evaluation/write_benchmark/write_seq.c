@@ -43,8 +43,10 @@ main(int argc, char *argv[])
 	while (numWrite < fileSize) {
 		numWrite += write(fd, buf, size);
 		
-		if (numWrite == -1)
+		if (numWrite == -1) {
 			printf("write error\n");
+			return 0;
+		}
 
 		if (numWrite >= fileSize)
 			break;
