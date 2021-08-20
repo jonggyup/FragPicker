@@ -5,13 +5,15 @@
 #include <time.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <string.h>
+#include <stdlib.h>
 
 int
 main(int argc, char *argv[])
 {
 	int fd;
-	ssize_t numRead=100;
-	ssize_t totalnumRead=0;
+	ssize_t numWrite = 0;
+	ssize_t fileSize = 0;
 	size_t size;
 	off_t offset;
 	unsigned char *buf;
@@ -23,10 +25,11 @@ main(int argc, char *argv[])
 	size = 1024*atoi(argv[2]);
 	offset = 0;
 	bufSize = posix_memalign((void **)&buf, 4096, size);
+	memset(buf, 0, bufSize);
 
-	fd = open(argv[1], O_RDONLY | O_DIRECT);
+	fd = open(argv[1], O_RDWR | O_DIRECT);
 	if (fd == -1)
-		printf("open\n");
+		printf("open error\n");
 
 	/* memalign() allocates a block of memory aligned on an address that
 	 * is a multiple of its first argument. By specifying this argument as
@@ -35,16 +38,17 @@ main(int argc, char *argv[])
 	 * 'alignment'. We do this to ensure that if, for example, we ask
 	 * for a 256-byte aligned buffer, we don't accidentally get
 	 * a buffer that is also aligned on a 512-byte boundary. */
+	fileSize = lseek(fd, 0, SEEK_END);
+	lseek(fd, 0, SEEK_SET);
 
 	gettimeofday(&start, NULL);
-	while (numRead != 0) {
-		numRead = read(fd, buf, size);
-		totalnumRead += numRead;
+	while (offset + size < fileSize ) {
+		numWrite += write(fd, buf, size);
 
-		if (numRead == -1)
-			printf("read\n");
-		lseek(fd, 1024*288, SEEK_CUR);
+		if (numWrite == -1)
+			printf("Write Error\n");
 
+		offset = lseek(fd, 1024*288, SEEK_CUR);
 	}
 	gettimeofday(&end, NULL);
 	double elapsed_time = ((double)t)/CLOCKS_PER_SEC;
@@ -52,6 +56,6 @@ main(int argc, char *argv[])
 	secs_used=(end.tv_sec - start.tv_sec);
 	micros_used = secs_used*1000000 + end.tv_usec - start.tv_usec;
 
-	printf("Throughput = %f\n", (double)totalnumRead/micros_used);
+	printf("Throughput = %f\n", (double)numWrite/micros_used);
 
 }

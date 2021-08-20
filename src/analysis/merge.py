@@ -26,7 +26,7 @@ for line in lines:
         #Not in the current merge window, new start
         if mergeWindowEnd < start:
             if begin == True:
-                result_file.write(str(mergeWindowStart) +" " + str(mergeWindowEnd) + " " + str(mergeWindowNums) + "\n") 
+                result_file.write(str(mergeWindowStart) +" " + str(mergeWindowEnd) + " " + str(mergeNums) + "\n") 
 
             mergeWindowStart = start #New mergeWindow is created
             mergeWindowEnd = end

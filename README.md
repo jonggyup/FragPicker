@@ -26,7 +26,8 @@ To address this, FragPicker analyzes the I/O activities of applications and migr
 
 * Evaluation
 	- evaluation/motivation: the motivational evaluation
-	- evaluation/synthetic: the synthetic evaluation
+	- evaluation/read_benchmark: the read evaluation
+	- evaluation/write_benchmark: the write evaluation
 
 ## Experiments
 ### Tested Environment
@@ -36,7 +37,7 @@ We use Ubuntu 18.04 LTS with Linux Kernel 5.7.0
 >1) HDD: Samsung HDD 7200RPM 1TB
 >2) MicroSD: Samsung MicroSD EVO type A1 128GB
 >3) SATA SSD: Samsung SATA FLash SSD 850 PRO 256GB
->4) NVMe SSD: Intel NVME Optane SSD 905P 960GB
+>4) NVMe SSD: Intel NVMe Optane SSD 905P 960GB
 
 ### 1. Evaluation Setup
 The evaluation source codes are written under an assumption that the mount point is /mnt without interference with other application. Therefore, the evaluation codes will umount and mount /mnt. Therefore, we hope you make sure nothing important is in /mnt. Also, the experiments should be performed with sudo.
@@ -156,25 +157,36 @@ Value          read_exp
 4096KB          1725.82     |
 ```
 
-### 3. Synthetic Evaluation
+### 3. Evaluation
+#### 3-1. Read workload
 The read workloads (Figure 8) perform sequential and stride read workloads on the three filesystems (ext4, f2fs, and btrfs). The current source codes conduct the experiments with Optane SSD and SATA Flash SSD.
 To execute, enter the synthetic experiment directory and run the following commands.
+Since we also measure the write amount using blktrace, no other applications should run at the same time.
 ```
 cd evaluation/synthetic_read
 make
 ./run_benchmark.sh
 ```
+./run_benchmark.sh for only Optane SSD takes 94m31.550s in our machine.
+
+
 The experiments measure throughput (MB/s), fragmentation state and write amount, after defragmentation.
->- throughput -> defragtool_read_after.result
->- write amount -> defragtool_btrace.trace
->- frag. state -> defragtool_frag_after.frag
+>- throughput -> $$$_read_after.result
+>- write amount -> $$$_btrace.trace
+>- frag. state -> $$$_frag_after.frag
 
 These results will be saved in ./results/workload_name/device_type/filesystem/
+Note that you may encouter an error like "./run_benchmark.sh: line 123: kill: (9431) - No such process", but you can just ignore this.
+
+
+
+
 
 To view the results in a nicer way, run the following commands,
 ```
 cd evaluation/synthetic_read
-./view_results.sh
+./view_results.sh $workload $device_type
+e.g., ./view_result.sh stride Optane
 ```
 
 

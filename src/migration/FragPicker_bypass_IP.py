@@ -10,7 +10,7 @@ def reallocation_func(target_file, start, size):
 
 defragsize=int(sys.argv[2])
 
-frag_degree = open("frag_degree", "w+")
+frag_degree = open("../analysis/frag_degree", "w+")
 target_file = open(sys.argv[1],"rb+")
 
 

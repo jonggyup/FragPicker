@@ -1,6 +1,7 @@
 import sys
 import subprocess
 import os
+#This file performs migration of the entire data.
 
 defragsize=int(sys.argv[2])
 
