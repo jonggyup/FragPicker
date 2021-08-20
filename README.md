@@ -50,9 +50,9 @@ The basic mechanism of these experiments is 1) mount a device in /mnt, 2) perfor
 Since we assume the mount point is /mnt (not /home/user/mnt), we hardcoded that in some parts of source codes.
 Therefore, we recommend that ppl use /mnt as the mount point and change the corresponding device name inside running scripts.
 
-As a example of motivational experiment, if your optane SSD is at /dev/nvme0n1p1, you need to change "for dev in nvme1n1p1" to "for dev in nvme0n1p1" in the 12nd line of evaluation/motivation/read_bench.c (or write_bench.c)
+As a example of motivational experiment, if your optane SSD is at /dev/nvme0n1p1, you need to change "for dev in nvme1n1p1" to "for dev in nvme0n1p1" at the 12nd line of evaluation/motivation/read_bench.c (or write_bench.c)
 
-Additionally, you need to change "nvme1n1p1)" to "nvme0n1p1" inside the case statement in the 15th line of the same file.
+Additionally, you need to change "nvme1n1p1)" to "nvme0n1p1)" inside the case statement at the 15th line of the same file.
 
 This rule is also applied to the read/write benchmarks (./run_benchmark.sh)
 
