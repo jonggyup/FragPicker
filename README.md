@@ -16,10 +16,10 @@ To address this, FragPicker analyzes the I/O activities of applications and migr
 	- src/analysis/merge.py: the overlap I/O merging in the per-file analysis
 	- src/analysis/hotness.sh: hotness filtering
 	- src/migration/FragPicker.py: the migration phase of FragPicker for out-place update filesystems (e.g., F2FS, Btrfs)
-	- src/migration/FragPicker\_IP.py: the migration phase of FragPicker for in-place update filesystems (e.g., Ext4)
-	- src/migration/FragPicker\_bypass.py: the bypass version of FragPicker for out-place update filesystems
-	- src/migration/FragPicker\_bypass\_IP.py: the bypass version of FragPicker for in-plcae update filesystems
-	- src/migration/defrag\_all.py: migration of the entire contents like conventional tools
+	- src/migration/FragPicker_IP.py: the migration phase of FragPicker for in-place update filesystems (e.g., Ext4)
+	- src/migration/FragPicker_bypass.py: the bypass version of FragPicker for out-place update filesystems
+	- src/migration/FragPicker_bypass_IP.py: the bypass version of FragPicker for in-plcae update filesystems
+	- src/migration/defrag_all.py: migration of the entire contents like conventional tools
 
 * Evaluation
 	- evaluation/motivation: the motivational evaluation
@@ -48,12 +48,12 @@ cd evaluation/motivation
 
 For read
 ```
-./read\_bench.sh
+./read_bench.sh
 ```
 
 For write
 ```
-./write\_bench.sh
+./write_bench.sh
 ```
 
 Note that, in the paper, we present only the results of the read benchmark as a form of figures.
@@ -62,47 +62,47 @@ Optane SSD --> nvme1n1p1
 SATA Flash SSD --> sdb1
 HDD --> sde1
 MicroSD --> sdf1
-In each benchmark file (read\_bench.sh write\_bench.sh), the device name and base\_dir should be modified.
+In each benchmark file (read_bench.sh write_bench.sh), the device name and base_dir should be modified.
 
 To view the result of the experiments, conduct the following commands
-./view\_exp\_type.sh I/O type dev\_type
+./view_exp_type.sh I/O type dev_type
 By default, the directory name for each dev is as follows.
 Optane SSD --> Optane
 SATA Flash SSD --> SSD
 HDD --> HDD
 MicroSD --> MicroSD
 
-1. read with varying frag\_size
+1. read with varying frag_size
 ```
-./view\_frag\_size.sh read dev\_type (directory name)
+./view_frag_size.sh read dev_type (directory name)
 ```
-e.g., ./view\_frag\_size.sh read Optane
-```
-
-2. read with varying frag\_distance
-```
-./view\_distance.sh read dev\_type
-```
-e.g., ./view\_distance.sh read Optane
+e.g., ./view_frag_size.sh read Optane
 ```
 
-3. write with varying frag\_size
+2. read with varying frag_distance
 ```
-./view\_frag\_size.sh write dev\_type
+./view_distance.sh read dev_type
 ```
-e.g., ./view\_frag\_size.sh write Optane
+e.g., ./view_distance.sh read Optane
 ```
 
-4. write with varying frag\_distance
+3. write with varying frag_size
 ```
-./view\_distance.sh write dev\_type
+./view_frag_size.sh write dev_type
 ```
-e.g., ./view\_distance.sh write Optane
+e.g., ./view_frag_size.sh write Optane
+```
+
+4. write with varying frag_distance
+```
+./view_distance.sh write dev_type
+```
+e.g., ./view_distance.sh write Optane
 ```
 
 The results consist of value and the performance (MB/s)
-e.g., Read with varying frag\_size on Optane SSD
-Value          read\_exp
+e.g., Read with varying frag_size on Optane SSD
+Value          read_exp
 4KB             723.864     |
 8KB             894.021     |
 16KB            1171.88     |
