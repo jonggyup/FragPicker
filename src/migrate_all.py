@@ -1,17 +1,6 @@
 import sys
 import subprocess
 import os
-'''
-if __name__ == '__main__':
-    argument = sys.argv
-    del argument[0]
-'''
-'''
-def read_file (filename, chunksize=4096):
-    with open(sys.argv[1], "rb") as f:
-        while True:
-            chunk = f.read(chunksize)
-'''
 
 defragsize=int(sys.argv[2])
 
@@ -41,13 +30,11 @@ for line in lines[:-1]:
 
     while bufsize >= defragsize:
         if need == 1:
-            '''print(need)'''
             data = target_file.read(defragsize*1024)
             size = len(data)
             target_file.seek(-1*size,1)
             target_file.write(data)
 
-            '''os.fsync(target_file.fileno())'''
             need = 1
             target_file.seek(-1*defragsize*1024,1)
 
@@ -56,9 +43,8 @@ for line in lines[:-1]:
         bufsize -= defragsize
 
     if bufsize > 0:
-        need=1
+        need = 1
 
-'''print(target_file.tell())'''
 if need == 1:
     data = target_file.read(bufsize*1024)
     size = len(data)

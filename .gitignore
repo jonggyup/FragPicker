@@ -3,4 +3,5 @@
 *.merged
 *.sorted
 *.txt
-
+*.frag
+*.trace

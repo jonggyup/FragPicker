@@ -2,7 +2,7 @@
 #$1 is process name
 
 ./remove.sh
-./trace.sh &
+./trace.sh $1 &
 sleep 5
 id=$!
 

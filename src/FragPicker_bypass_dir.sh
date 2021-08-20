@@ -1,4 +1,6 @@
 #!/bin/bash
+path=$( cd "$(dirname "${BASH_SOURCE[0]}")"; pwd -P)
+filesystem=$(findmnt | grep "/mnt" | awk '{print $3}')
 
 walk_dir () {
 	shopt -s nullglob dotglob
@@ -7,11 +9,14 @@ walk_dir () {
 		if [ -d "$pathname" ]; then
 			walk_dir "$pathname"
 		else
-			python3 ./FragPicker_bypass.py $pathname 128
-
+			if [[ "$filesystem" == "ext4" ]]; then
+				(cd $path && python3 ./FragPicker_bypass_IP.sh $pathname 128)
+			else
+				(cd $path && python3 ./FragPicker_bypass_OP.sh $pathname 128)
+			fi
 		fi
 	done
 }
 
 
-walk_dir "/mnt"
+walk_dir "/mnt" #recursively performs defragmentation.
