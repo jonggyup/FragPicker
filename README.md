@@ -165,7 +165,7 @@ We utilize CORREL and SLOPE function in Excel after normalization, in order to o
 
 ### 3. Evaluation
 #### 3-1. Read benchmark
-The read workloads (Figure 8, 9) perform sequential and stride read workloads on the three filesystems (ext4, f2fs, and btrfs). The current source codes conduct the experiments with Optane SSD and SATA Flash SSD.
+The read workloads (Figure 8, 9) perform sequential and stride read workloads with O_DIRECT and 128KB-sized requests on the three filesystems (ext4, f2fs, and btrfs). The current source codes conduct the experiments with Optane SSD and SATA Flash SSD.
 
 To execute, enter the synthetic experiment directory and run the following commands.
 
@@ -211,7 +211,7 @@ Conv-T is btrfs.defragment with the optimization. Therefore, ext4 and f2fs do no
 
 
 #### 3-2. Write benchmark
-The write workloads (Figure 8, 9) perform sequential and stride write workloads on the three filesystems (ext4, f2fs, and btrfs). The current source codes conduct the experiments with Optane SSD and SATA Flash SSD.
+The write workloads (Figure 8, 9) perform sequential and stride write workloads with O_DIRECT and 128KB-sized requests on the three filesystems (ext4, f2fs, and btrfs). The current source codes conduct the experiments with Optane SSD and SATA Flash SSD.
 To execute, enter the synthetic experiment directory and run the following commands.
 Since we also measure the write amount using blktrace, no other applications should run at the same time.
 ```
@@ -219,6 +219,8 @@ cd evaluation/write_benchmark
 make
 ./run_benchmark.sh
 ```
+
+./run_benchmark.sh for only Optane SSD and Flash SSD takes 94m31.550s and 43m03.371s, respectively, in our machine.
 
 To view the results in a nicer way, run the following commands,
 ```

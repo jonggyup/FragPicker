@@ -19,7 +19,7 @@ do
 			;;
 	esac
 	#Similar to the motivational experiments, needs to change the device name and the path to the corresponding ones
-	for dev in sdb1 #nvme1n1p1 #sdb1 #sde1 sdf1
+	for dev in nvme1n1p1 sdb1 #sde1 sdf1
 	do
 		case $dev in
 			nvme1n1p1)
