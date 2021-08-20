@@ -161,6 +161,7 @@ Value          read_exp
 2048KB          1729.13     |
 4096KB          1725.82     |
 ```
+We utilize CORREL and SLOPE function in Excel after normalization, in order to obtain CC and NLRS. 
 
 ### 3. Evaluation
 #### 3-1. Read benchmark
