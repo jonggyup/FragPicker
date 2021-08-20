@@ -28,7 +28,7 @@ To address this, FragPicker analyzes the I/O activities of applications and migr
 ## Experiments
 ### Tested Environment
 We use Ubuntu 18.04 LTS with Linux Kernel 5.7.0
-Storage
+* Storage
 1) HDD: Samsung HDD 7200RPM 1TB
 2) MicroSD: Samsung MicroSD EVO type A1 128GB
 3) SATA SSD: Samsung SATA FLash SSD 850 PRO 256GB
@@ -39,6 +39,8 @@ Storage
 ```
 ./dep.sh
 ```
+
+#### 2. Install 
 
 ### 2. Motivation Experiments
 Enter the motivation experiment directory.
@@ -65,7 +67,7 @@ MicroSD --> sdf1
 In each benchmark file (read_bench.sh write_bench.sh), the device name and base_dir should be modified.
 
 To view the result of the experiments, conduct the following commands
-./view_exp_type.sh I/O type dev_type
+./view_experiment_type.sh I/O type dev_type
 By default, the directory name for each dev is as follows.
 Optane SSD --> Optane
 SATA Flash SSD --> SSD
@@ -77,28 +79,24 @@ MicroSD --> MicroSD
 ./view_frag_size.sh read dev_type (directory name)
 ```
 e.g., ./view_frag_size.sh read Optane
-```
 
 2. read with varying frag_distance
 ```
 ./view_distance.sh read dev_type
 ```
 e.g., ./view_distance.sh read Optane
-```
 
 3. write with varying frag_size
 ```
 ./view_frag_size.sh write dev_type
 ```
 e.g., ./view_frag_size.sh write Optane
-```
 
 4. write with varying frag_distance
 ```
 ./view_distance.sh write dev_type
 ```
 e.g., ./view_distance.sh write Optane
-```
 
 The results consist of value and the performance (MB/s)
 e.g., Read with varying frag_size on Optane SSD
