@@ -43,7 +43,20 @@ We use Ubuntu 18.04 LTS with Linux Kernel 5.7.0
 
 ### 1. Evaluation Setup
 ***Warning***
-The evaluation source codes are written under an assumption that the mount point is /mnt without interference with other application. Therefore, the evaluation codes will continuously umount and mount /mnt. Therefore, we hope you make sure nothing important is in /mnt. Also, the experiments should be performed with sudo.
+The evaluation source codes are written under an assumption that the mount point is /mnt without interference with other application. Therefore, the evaluation codes will continuously umount and mount /mnt. Therefore, we hope you make sure nothing important in /mnt. Also, the experiments should be performed with sudo.
+
+The basic mechanism of these experiments is 1) mount a device in /mnt, 2) perform experiments, and 3) unmount the device.
+
+Since we assume the mount point is /mnt (not /home/user/mnt), we hardcoded that in some parts of source codes.
+Therefore, we recommend that ppl use /mnt as the mount point and change the corresponding device name inside running scripts.
+
+As a example of motivational experiment, if your optane SSD is at /dev/nvme0n1p1, you need to change "for dev in nvme1n1p1" to "for dev in nvme0n1p1" in the 12nd line of evaluation/motivation/read_bench.c (or write_bench.c)
+
+Additionally, you need to change "nvme1n1p1)" to "nvme0n1p1" inside the case statement in the 15th line of the same file.
+
+This rule is also applied to the read/write benchmarks (./run_benchmark.sh)
+
+
 #### 1-1. Install dependencies
 ```
 ./dep.sh
