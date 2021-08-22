@@ -13,7 +13,7 @@ To address this, FragPicker analyzes the I/O activities of applications and migr
 * Source Code
 	- src/analysis: the analysis phase that analyzes the application I/O behaviors
 	- src/analysis/trace.sh: I/O system call monitoring
-	- src/analysis/parse.sh: Parsing the traced data
+	- src/analysis/parse.sh: parsing the traced data
 	- src/analysis/processing.py: per-file analysis
 	- src/analysis/merge.py: the overlap I/O merging in the per-file analysis
 	- src/analysis/hotness.sh: hotness filtering
@@ -56,15 +56,15 @@ Additionally, you need to change "nvme1n1p1)" to "nvme0n1p1)" inside the case st
 
 This rule is also applied to the read/write benchmarks (./run_benchmark.sh)
 
-We measure the performnace for five times and calculate the average to obtain stable experimental results by minimizing effects inside the storage devices, such as internal write buffer (or cache).
+We measure the performnace for five times and calculate the average to obtain stable experimental results by minimizing the effect of other things inside the storage devices, such as internal write buffer (or cache).
 
 #### 1-1. Install dependencies
 ```
-./dep.sh
+./install_dep.sh
 ```
 
 #### 1-2. Install bcc tracer
-The bcc trace should be installed via manual compiling instead of packages. We leave its brief installation here, and the detailed installation is explained in https://github.com/iovisor/bcc/blob/master/INSTALL.md
+**The bcc trace should be installed via manual compiling instead of packages**. We leave its brief installation here, and the detailed installation is explained in https://github.com/iovisor/bcc/blob/master/INSTALL.md
 
 #### Install build dependencies
 ```
@@ -220,7 +220,9 @@ ext4                 990.052         |  1758.70         |  1809.15         |  18
 f2fs                 987.095         |  1723.71         |  1723.60         |  1729.02         |  527368K         |  525320K         |  1052MiB         |
 btrfs                435.707         |  877.273         |  882.680         |  933.656         |  528720K         |  525172K         |  1101MiB         |  886.660     |  532460K     |
 ```
-Here, $$$_perf means the throughput (MB/s), and $$$_write means the amount of writes.
+Here, $$$_perf means the throughput (MB/s), and $$$_write means the amount of writes during defragmentation.
+
+Baseline is before defragmentaiton, FragPicker-B is the bypass version, FragPicker is FragPicker, and Conv is the conventional tools (e.g., e4defrag in the case of ext4).
 
 Conv-T is btrfs.defragment with the optimization. Therefore, ext4 and f2fs do not have the value.
 
@@ -231,7 +233,7 @@ The update workloads (Figure 8, 9) perform sequential and stride write I/Os towa
 To run the benchmark, enter the synthetic experiment directory and execute the following commands.
 Since we also measure the write amount using blktrace, no other applications should run at the same time.
 ```
-cd evaluation/write_benchmark
+cd evaluation/update_benchmark
 make
 ./run_benchmark.sh
 ```
@@ -247,8 +249,10 @@ cd evaluation/synthetic_read
 
 #### 3-3. Tips
 The experiments take a long time. Therefore, we recommend to use terminal multiplexer, such as tmux, to maintain the session. 
-All the experiments can be run individually by using the aforementioned scripts. Or, you can just run ./run_all_bench.sh to run all the benchmarks at a time.
-This takes around 
+
+All the experiments can be run individually by using the aforementioned scripts. 
+
+Or, you can just run `./run_all_bench.sh` to run all the benchmarks at a time. This takes around 420 minutes.
 
 
 
