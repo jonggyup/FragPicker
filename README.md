@@ -138,30 +138,31 @@ By default, the directory name for each dev is as follows.
 >- HDD -> HDD
 >- MicroSD -> MicroSD
 
-1. read with varying frag_size
++ 1. read with varying frag_size
 ```
 ./view_frag_size.sh read dev_type (directory name)
 ```
 > e.g., ./view_frag_size.sh read Optane
 
-2. read with varying frag_distance
++ 2. read with varying frag_distance
 ```
 ./view_distance.sh read dev_type
 ```
 > e.g., ./view_distance.sh read Optane
 
-3. write with varying frag_size
++ 3. write with varying frag_size
 ```
 ./view_frag_size.sh write dev_type
 ```
 > e.g., ./view_frag_size.sh write Optane
 
-4. write with varying frag_distance
++ 4. write with varying frag_distance
 ```
 ./view_distance.sh write dev_type
 ```
 > e.g., ./view_distance.sh write Optane
  
+
 The results consist of value and the performance (MB/s)
 
 > e.g., Read benchmark with varying frag_size on Optane SSD
@@ -185,15 +186,16 @@ We utilize CORREL and SLOPE function in Excel after normalization, in order to o
 #### 3-1. Read benchmark
 The read workloads (Figure 8, 9) performs sequential and stride read I/Os with O_DIRECT and 128KB-sized requests on the three filesystems (ext4, f2fs, and btrfs). The current source codes conduct the experiments with Optane SSD and SATA Flash SSD.
 
-To run the read benchmark, enter the synthetic experiment directory and run the following commands.
-
 Since we also measure the write amount using blktrace, no other applications should run at the same time.
+
++ To run the read benchmark, enter the synthetic experiment directory and run the following commands.
+
 ```
 cd evaluation/read_benchmark
 make
 ./run_benchmark.sh
 ```
-./run_benchmark.sh for only Optane SSD and Flash SSD takes 96m31.550s and 46m24.246s, respectively, in our machine.
+./run_benchmark.sh for Optane SSD and Flash SSD takes 96m31.550s and 46m24.246s, respectively, in our machine.
 
 The experiments measure throughput (MB/s), fragmentation state and write amount, after defragmentation.
 >- throughput -> $$$_perf_after.result
@@ -204,7 +206,7 @@ These results will be saved in ./results/workload_name/device_type/filesystem/
 
 Note that if you encouter an error like "umount: /dev/sdf1: not mounted.", you can just ignore this.
 
-To view the results in a nicer way, run the following commands,
++ To view the results in a nicer way, run the following commands,
 ```
 ./view_results.sh $workload $device_type
 ```
@@ -230,17 +232,17 @@ Conv-T is btrfs.defragment with the optimization. Therefore, ext4 and f2fs do no
 
 #### 3-2. Update benchmark
 The update workloads (Figure 8, 9) perform sequential and stride write I/Os towards existing files with O_DIRECT and 128KB-sized requests on the three filesystems (ext4, f2fs, and btrfs). The current source codes conduct the experiments with Optane SSD and SATA Flash SSD.
-To run the benchmark, enter the synthetic experiment directory and execute the following commands.
-Since we also measure the write amount using blktrace, no other applications should run at the same time.
+
++ To run the benchmark, enter the synthetic experiment directory and execute the following commands.
 ```
 cd evaluation/update_benchmark
 make
 ./run_benchmark.sh
 ```
 
-./run_benchmark.sh for only Optane SSD and Flash SSD takes 95m51.287s and 45m03.371s, respectively, in our machine.
+./run_benchmark.sh for Optane SSD and Flash SSD takes 95m51.287s and 45m03.371s, respectively, in our machine.
 
-To view the results in a nicer way, run the following commands,
++ To view the results in a nicer way, run the following commands,
 ```
 cd evaluation/synthetic_read
 ./view_results.sh $workload $device_type
