@@ -28,7 +28,7 @@ for filename_line in filename_lines:
     #obtain the fragmentation state of the file
     subprocess.check_call(["sed","-i","1,3d", "../analysis/frag_degree.txt"])
     subprocess.check_call(["sed","-i","$d", "../analysis/frag_degree.txt"])
-    os.fsync(filefrag_f.fileno())
+    #os.fsync(filefrag_f.fileno())
 
     filefrag_f.close()
 

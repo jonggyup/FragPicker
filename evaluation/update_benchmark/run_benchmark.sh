@@ -80,32 +80,31 @@ do
 				python3 ../tools/fragmentor_ext4.py /mnt/3
 			fi
 			
-			#Enable in-place update of f2fs
-			if [[ "$filesystem" == "f2fs" ]]; then
-				echo 16 > /sys/fs/f2fs/$dev/ipu_policy
-			fi
-
 			../tools/cacheflush.sh
 
 			#Fragmentation info. before defrag.
 			filefrag -v /mnt/1 > $result_path/frag_before1.frag
 			filefrag -v /mnt/2 > $result_path/frag_before2.frag
 			filefrag -v /mnt/3 > $result_path/frag_before3.frag
-			filefrag -v /mnt/4 > $result_path/frag_before3.frag
+			filefrag -v /mnt/4 > $result_path/frag_before4.frag
 
 			../tools/cacheflush.sh
 
 			#Measure the performance
-			$command /mnt/1 $ra_size > $result_path/perf_before.result
+			filename=/mnt/1
+			$command $filename $ra_size > /dev/null
+			val1=$($command $filename $ra_size | awk '{print $3}')
+			val2=$($command $filename $ra_size | awk '{print $3}')
+			val3=$($command $filename $ra_size | awk '{print $3}')
+			val4=$($command $filename $ra_size | awk '{print $3}')
+			val5=$($command $filename $ra_size | awk '{print $3}')
+			val=`echo "scale=6; ($val1 + $val2 + $val3 + $val4 + $val5) / 5 " | bc `
 
+			printf "Throughput = %f\n" $val > $result_path/perf_before.result
+			
 			#Begin the experiments with FragPicker_bypass
 			#measure the write amount in the block layer
 			btrace /dev/$dev -a issue &> $result_path/fragpicker_bypass_btrace.trace &
-
-			#disable in-place update of f2fs
-			if [[ "$filesystem" == "f2fs" ]]; then
-				echo 4 > /sys/fs/f2fs/$dev/ipu_policy
-			fi
 
 			#Perform FragPicker with the bypass option
 			(cd $path/migration && ./FragPicker_bypass.sh /mnt/1 128)
@@ -116,13 +115,17 @@ do
 			filefrag -v /mnt/1 > $result_path/fragpicker_bypass_frag_after.frag
 			../tools/cacheflush.sh
 
-			#enable in-place update of f2fs
-			if [[ "$filesystem" == "f2fs" ]]; then
-				echo 16 > /sys/fs/f2fs/$dev/ipu_policy
-			fi
-
 			sleep 4
-			$command /mnt/1 $ra_size > $result_path/fragpicker_bypass_perf_after.result
+			filename=/mnt/1
+			$command $filename $ra_size > /dev/null
+			val1=$($command $filename $ra_size | awk '{print $3}')
+			val2=$($command $filename $ra_size | awk '{print $3}')
+			val3=$($command $filename $ra_size | awk '{print $3}')
+			val4=$($command $filename $ra_size | awk '{print $3}')
+			val5=$($command $filename $ra_size | awk '{print $3}')
+			val=`echo "scale=6; ($val1 + $val2 + $val3 + $val4 + $val5) / 5 " | bc `
+
+			printf "Throughput = %f\n" $val > $result_path/fragpicker_bypass_perf_after.result
 
 			#begin the experiments with FragPicker
 			#Analysis phase begins
@@ -146,11 +149,6 @@ do
 			#measure the write amount in the block layer
 			btrace /dev/$dev -a issue &> $result_path/fragpicker_btrace.trace &
 
-			#disable in-place update of f2fs
-			if [[ "$filesystem" == "f2fs" ]]; then
-				echo 4 > /sys/fs/f2fs/$dev/ipu_policy
-			fi
-
 			(cd $path/migration && ./FragPicker.sh)
 			
 			sleep 10
@@ -158,17 +156,20 @@ do
 
 			filefrag -v /mnt/2 > $result_path/fragpicker_frag_after.frag
 
-			#enable in-place update of f2fs
-			if [[ "$filesystem" == "f2fs" ]]; then
-				echo 16 > /sys/fs/f2fs/$dev/ipu_policy
-			fi
-
 			../tools/cacheflush.sh
 			sleep 4
 
 			#measure the performance
-			$command /mnt/2 $ra_size > $result_path/fragpicker_perf_after.result
+			filename=/mnt/2
+			$command $filename $ra_size > /dev/null
+			val1=$($command $filename $ra_size | awk '{print $3}')
+			val2=$($command $filename $ra_size | awk '{print $3}')
+			val3=$($command $filename $ra_size | awk '{print $3}')
+			val4=$($command $filename $ra_size | awk '{print $3}')
+			val5=$($command $filename $ra_size | awk '{print $3}')
+			val=`echo "scale=6; ($val1 + $val2 + $val3 + $val4 + $val5) / 5 " | bc `
 
+			printf "Throughput = %f\n" $val > $result_path/fragpicker_perf_after.result
 
 			#begin the experiments with conventional tools 
 			btrace /dev/$dev -a issue &> $result_path/conv_btrace.trace &
@@ -178,9 +179,7 @@ do
 					e4defrag /mnt/3
 					;;
 				f2fs)
-					echo 4 > /sys/fs/f2fs/$dev/ipu_policy
 					(cd $path/migration && python3 ./migrate_all.py /mnt/3 1024) #F2FS doesn't have user-friendly defragmenter. So, we just migrate the entire contents into a new area, similarly to other defragmenters
-					echo 16 > /sys/fs/f2fs/$dev/ipu_policy
 					;;
 				btrfs)
 					btrfs filesystem defragment -f /mnt/3
@@ -195,8 +194,16 @@ do
 			sleep 4
 
 			#measure the performance
-			$command /mnt/3 $ra_size > $result_path/conv_perf_after.result
+			filename=/mnt/3
+			$command $filename $ra_size > /dev/null
+			val1=$($command $filename $ra_size | awk '{print $3}')
+			val2=$($command $filename $ra_size | awk '{print $3}')
+			val3=$($command $filename $ra_size | awk '{print $3}')
+			val4=$($command $filename $ra_size | awk '{print $3}')
+			val5=$($command $filename $ra_size | awk '{print $3}')
+			val=`echo "scale=6; ($val1 + $val2 + $val3 + $val4 + $val5) / 5 " | bc `
 
+			printf "Throughput = %f\n" $val > $result_path/conv_perf_after.result
 
 			#In the case of btrfs, performs one more with the optimization
 			if [[ "$filesystem" == "btrfs" ]]; then
@@ -208,8 +215,16 @@ do
 				filefrag -v /mnt/4 > $result_path/conv_t_frag_after.frag
 				../tools/cacheflush.sh
 				sleep 4
+			filename=/mnt/4
+			$command $filename $ra_size > /dev/null
+			val1=$($command $filename $ra_size | awk '{print $3}')
+			val2=$($command $filename $ra_size | awk '{print $3}')
+			val3=$($command $filename $ra_size | awk '{print $3}')
+			val4=$($command $filename $ra_size | awk '{print $3}')
+			val5=$($command $filename $ra_size | awk '{print $3}')
+			val=`echo "scale=6; ($val1 + $val2 + $val3 + $val4 + $val5) / 5 " | bc `
 
-				$command /mnt/4 $ra_size > $result_path/conv_t_perf_after.result
+			printf "Throughput = %f\n" $val > $result_path/conv_t_perf_after.result
 			fi
 		done
 	done

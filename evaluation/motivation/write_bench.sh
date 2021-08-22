@@ -13,19 +13,19 @@ for dev in nvme1n1p1 sde1 sdb1 sdf1
 do
 	case $dev in
 		nvme1n1p1) #Optane SSD
-			size=200  #file size in MB
+			size=100  #file size in MB
 			base_dir=$startbase_dir/Optane
 			;;
 		sdb1) #SATA Flash SSD
-			size=100
+			size=50
 			base_dir=$startbase_dir/SSD
 			;;
 		sde1) #HDD
-			size=30
+			size=10
 			base_dir=$startbase_dir/HDD
 			;;
 		sdf1) #MicroSD or USB
-			size=30
+			size=10
 			base_dir=$startbase_dir/MicroSD
 			;;
 	esac
@@ -61,7 +61,16 @@ do
 			
 			../tools/cacheflush.sh
 			#Performs sequential writes with O_DIRECT and measure the throughput.
-			./write_seq /mnt/target_file $req_size > $result_path/${frag_size}_${frag_distance}.result
+			./write_seq /mnt/target_file $req_size > /dev/null
+			val1=$(./write_seq /mnt/target_file $req_size | awk '{print $3}')
+			val2=$(./write_seq /mnt/target_file $req_size | awk '{print $3}')
+			val3=$(./write_seq /mnt/target_file $req_size | awk '{print $3}')
+			val4=$(./write_seq /mnt/target_file $req_size | awk '{print $3}')
+			val5=$(./write_seq /mnt/target_file $req_size | awk '{print $3}')
+			val=`echo "scale=6; ($val1 + $val2 + $val3 + $val4 + $val5) / 5 " | bc `
+
+			printf "Throughput = %f\n" $val > $result_path/${frag_size}_${frag_distance}.result
+
 		done
 	done
 
@@ -89,7 +98,15 @@ do
 			
 			../tools/cacheflush.sh
 			#Performs sequential writes with O_DIRECT and measure the throughput.
-			./write_seq /mnt/target_file $req_size > $result_path/${frag_size}_${frag_distance}.result
+			./write_seq /mnt/target_file $req_size > /dev/null
+			val1=$(./write_seq /mnt/target_file $req_size | awk '{print $3}')
+			val2=$(./write_seq /mnt/target_file $req_size | awk '{print $3}')
+			val3=$(./write_seq /mnt/target_file $req_size | awk '{print $3}')
+			val4=$(./write_seq /mnt/target_file $req_size | awk '{print $3}')
+			val5=$(./write_seq /mnt/target_file $req_size | awk '{print $3}')
+			val=`echo "scale=6; ($val1 + $val2 + $val3 + $val4 + $val5) / 5 " | bc `
+
+			printf "Throughput = %f\n" $val > $result_path/${frag_size}_${frag_distance}.result
 		done
 	done
 

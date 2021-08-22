@@ -9,7 +9,7 @@ fi
 
 if [ "$3" == "f2fs" ]; then
 	mount -t $3 /dev/$1 $2 
-	echo 4 > /sys/fs/f2fs/$1/ipu_policy #Disables IPU.
+	echo 4 > /sys/fs/f2fs/$1/ipu_policy #Disables IPU. We can disable IPU right before migration but we disable here for better readability of source codes.
 else
 	mount -t $3 /dev/$1 $2
 fi

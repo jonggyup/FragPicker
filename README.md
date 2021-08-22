@@ -28,7 +28,7 @@ To address this, FragPicker analyzes the I/O activities of applications and migr
 * Evaluation
 	- evaluation/motivation: the motivational evaluation
 	- evaluation/read_benchmark: the read evaluation
-	- evaluation/write_benchmark: the write evaluation
+	- evaluation/update_benchmark: the update evaluation
 	- evaluation/tools: tools for evaluation
 
 ## Experiments
@@ -56,6 +56,7 @@ Additionally, you need to change "nvme1n1p1)" to "nvme0n1p1)" inside the case st
 
 This rule is also applied to the read/write benchmarks (./run_benchmark.sh)
 
+We measure the performnace for five times and calculate the average to obtain stable experimental results by minimizing effects inside the storage devices, such as internal write buffer (or cache).
 
 #### 1-1. Install dependencies
 ```
@@ -86,26 +87,30 @@ popd
 ```
 
 
-
-
 ### 2. Motivation Experiments
+The motivaitonal experiemnts consist of read and write (update) workloads. 
+They measure the throughput using O_DIRECT 128KB requests while varying the frag_distacne and frag_size.
+
 Enter the motivation experiment directory.
 ```
 cd evaluation/motivation
 make
 ```
 
-For read (takes around 133 minutes) ---> Figure 4. (a) -- (d) and Table 1
+For read (takes around 66m8.846s) ---> Figure 4. (a) -- (d) and Table 1
 ```
 ./read_bench.sh
 ```
 
-For write (takes 136 minutes)
+For write (takes around 70m53.033s)
 ```
 ./write_bench.sh
 ```
 
 Note that, in the paper, we present only the results of the read benchmark as a form of figures.
+We utilize F2FS filesystem with IPU disabled to create files with a certain file layout. 
+Although IPU is disabled, the vanilna F2FS performs in-place update in the case of O_DIRECT.
+Therefore, if you patch F2FS with out-place O_DIRECT update, you should restore it to the vanila F2FS.
 
 By default, the device name is configured as follows.
 >- Optane SSD -> nvme1n1p1
@@ -114,16 +119,16 @@ By default, the device name is configured as follows.
 >- MicroSD -> sdf1
 
 The benchmark maybe needs the following storage free space
->- Optane -> around 210GB
->- SSD -> around 110GB
->- HDD and MircoSD -> around 35GB
+>- Optane -> around 110GB
+>- SSD -> around 60GB
+>- HDD and MircoSD -> around 20GB
 
-If your devices have insufficient free space, you can decrease the size of target files via the size variable.
+If your devices have insufficient free space, you can decrease the size of target files by changing the 'size' variable.
 
 In each benchmark file (read_bench.sh, write_bench.sh), **the device name and base_dir should be modified.**
 
 
-To view the result of the experiments, conduct the following commands
+To view the result of the experiments, execute the following commands
 ```
 ./view_experiment_type.sh I/O type dev_type
 ```
@@ -178,9 +183,9 @@ We utilize CORREL and SLOPE function in Excel after normalization, in order to o
 
 ### 3. Evaluation
 #### 3-1. Read benchmark
-The read workloads (Figure 8, 9) perform sequential and stride read workloads with O_DIRECT and 128KB-sized requests on the three filesystems (ext4, f2fs, and btrfs). The current source codes conduct the experiments with Optane SSD and SATA Flash SSD.
+The read workloads (Figure 8, 9) performs sequential and stride read I/Os with O_DIRECT and 128KB-sized requests on the three filesystems (ext4, f2fs, and btrfs). The current source codes conduct the experiments with Optane SSD and SATA Flash SSD.
 
-To execute, enter the synthetic experiment directory and run the following commands.
+To run the read benchmark, enter the synthetic experiment directory and run the following commands.
 
 Since we also measure the write amount using blktrace, no other applications should run at the same time.
 ```
@@ -188,7 +193,7 @@ cd evaluation/read_benchmark
 make
 ./run_benchmark.sh
 ```
-./run_benchmark.sh for only Optane SSD and Flash SSD takes 94m31.550s and 43m24.246s, respectively, in our machine.
+./run_benchmark.sh for only Optane SSD and Flash SSD takes 96m31.550s and 46m24.246s, respectively, in our machine.
 
 The experiments measure throughput (MB/s), fragmentation state and write amount, after defragmentation.
 >- throughput -> $$$_perf_after.result
@@ -197,12 +202,10 @@ The experiments measure throughput (MB/s), fragmentation state and write amount,
 
 These results will be saved in ./results/workload_name/device_type/filesystem/
 
-Note that if you encouter an error like "./run_benchmark.sh: line 123: kill: (9431) - No such process", you can just ignore this.
-
+Note that if you encouter an error like "umount: /dev/sdf1: not mounted.", you can just ignore this.
 
 To view the results in a nicer way, run the following commands,
 ```
-cd evaluation/synthetic_read
 ./view_results.sh $workload $device_type
 ```
 > e.g., ./view_result.sh stride Optane ($workload is either sequential or stride)
@@ -223,9 +226,9 @@ Conv-T is btrfs.defragment with the optimization. Therefore, ext4 and f2fs do no
 
 
 
-#### 3-2. Write benchmark
-The write workloads (Figure 8, 9) perform sequential and stride write workloads with O_DIRECT and 128KB-sized requests on the three filesystems (ext4, f2fs, and btrfs). The current source codes conduct the experiments with Optane SSD and SATA Flash SSD.
-To execute, enter the synthetic experiment directory and run the following commands.
+#### 3-2. Update benchmark
+The update workloads (Figure 8, 9) perform sequential and stride write I/Os towards existing files with O_DIRECT and 128KB-sized requests on the three filesystems (ext4, f2fs, and btrfs). The current source codes conduct the experiments with Optane SSD and SATA Flash SSD.
+To run the benchmark, enter the synthetic experiment directory and execute the following commands.
 Since we also measure the write amount using blktrace, no other applications should run at the same time.
 ```
 cd evaluation/write_benchmark
@@ -233,7 +236,7 @@ make
 ./run_benchmark.sh
 ```
 
-./run_benchmark.sh for only Optane SSD and Flash SSD takes 94m31.550s and 43m03.371s, respectively, in our machine.
+./run_benchmark.sh for only Optane SSD and Flash SSD takes 95m51.287s and 45m03.371s, respectively, in our machine.
 
 To view the results in a nicer way, run the following commands,
 ```
@@ -241,6 +244,12 @@ cd evaluation/synthetic_read
 ./view_results.sh $workload $device_type
 ```
 > e.g., ./view_result.sh stride Optane
+
+#### 3-3. Tips
+The experiments take a long time. Therefore, we recommend to use terminal multiplexer, such as tmux, to maintain the session. 
+All the experiments can be run individually by using the aforementioned scripts. Or, you can just run ./run_all_bench.sh to run all the benchmarks at a time.
+This takes around 
+
 
 
 ### Tips for errors
