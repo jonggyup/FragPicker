@@ -249,6 +249,8 @@ cd evaluation/synthetic_read
 ```
 > e.g., ./view_result.sh stride Optane
 
+Note that since btrfs performs out-place update, defragmentation cannot improve the update performance of btrfs as explained in the paper. Additionally, after updating blocks, the fragmented blocks are narturally defragmented due to its out-place update policy. Therefore, FragPicker barely migrates data since they are already contiguous. 
+
 #### 3-3. Tips
 The experiments take a long time. Therefore, we recommend to use terminal multiplexer, such as tmux, to maintain the session. 
 
