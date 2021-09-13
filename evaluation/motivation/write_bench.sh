@@ -57,18 +57,11 @@ do
 			done
 
 			#Store fragmentaiton information of the target file.
-			hdparm --fibmap $mount_point/target_file > $result_path/target_file_frag.result
+			#hdparm --fibmap $mount_point/target_file > $result_path/target_file_frag.result
 			
 			../tools/cacheflush.sh
 			#Performs sequential writes with O_DIRECT and measure the throughput.
-			./write_seq /mnt/target_file $req_size > /dev/null
-			val1=$(./write_seq /mnt/target_file $req_size | awk '{print $3}')
-			val2=$(./write_seq /mnt/target_file $req_size | awk '{print $3}')
-			val3=$(./write_seq /mnt/target_file $req_size | awk '{print $3}')
-			val4=$(./write_seq /mnt/target_file $req_size | awk '{print $3}')
-			val5=$(./write_seq /mnt/target_file $req_size | awk '{print $3}')
-			val=`echo "scale=6; ($val1 + $val2 + $val3 + $val4 + $val5) / 5 " | bc `
-
+			val=$(./write_seq /mnt/target_file $req_size | awk '{print $3}')
 			printf "Throughput = %f\n" $val > $result_path/${frag_size}_${frag_distance}.result
 
 		done
@@ -94,18 +87,11 @@ do
 			done
 
 			#Store fragmentaiton information of the target file.
-			hdparm --fibmap $mount_point/target_file > $result_path/target_file_frag.result
+			#hdparm --fibmap $mount_point/target_file > $result_path/target_file_frag.result
 			
 			../tools/cacheflush.sh
 			#Performs sequential writes with O_DIRECT and measure the throughput.
-			./write_seq /mnt/target_file $req_size > /dev/null
-			val1=$(./write_seq /mnt/target_file $req_size | awk '{print $3}')
-			val2=$(./write_seq /mnt/target_file $req_size | awk '{print $3}')
-			val3=$(./write_seq /mnt/target_file $req_size | awk '{print $3}')
-			val4=$(./write_seq /mnt/target_file $req_size | awk '{print $3}')
-			val5=$(./write_seq /mnt/target_file $req_size | awk '{print $3}')
-			val=`echo "scale=6; ($val1 + $val2 + $val3 + $val4 + $val5) / 5 " | bc `
-
+			val=$(./write_seq /mnt/target_file $req_size | awk '{print $3}')
 			printf "Throughput = %f\n" $val > $result_path/${frag_size}_${frag_distance}.result
 		done
 	done

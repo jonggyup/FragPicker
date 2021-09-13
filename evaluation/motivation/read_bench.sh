@@ -61,14 +61,7 @@ do
 			
 			../tools/cacheflush.sh
 			#Performs sequential reads with O_DIRECT and measure the throughput.
-			./read_seq /mnt/target_file $req_size > /dev/null
-			val1=$(./read_seq /mnt/target_file $req_size | awk '{print $3}')
-			val2=$(./read_seq /mnt/target_file $req_size | awk '{print $3}')
-			val3=$(./read_seq /mnt/target_file $req_size | awk '{print $3}')
-			val4=$(./read_seq /mnt/target_file $req_size | awk '{print $3}')
-			val5=$(./read_seq /mnt/target_file $req_size | awk '{print $3}')
-			val=`echo "scale=6; ($val1 + $val2 + $val3 + $val4 + $val5) / 5 " | bc `
-
+			val=$(./read_seq /mnt/target_file $req_size | awk '{print $3}')
 			printf "Throughput = %f\n" $val > $result_path/${frag_size}_${frag_distance}.result
 		done
 	done
@@ -97,15 +90,7 @@ do
 			
 			../tools/cacheflush.sh
 			#Performs sequential reads with O_DIRECT and measure the throughput.
-
-			./read_seq /mnt/target_file $req_size > /dev/null
-			val1=$(./read_seq /mnt/target_file $req_size | awk '{print $3}')
-			val2=$(./read_seq /mnt/target_file $req_size | awk '{print $3}')
-			val3=$(./read_seq /mnt/target_file $req_size | awk '{print $3}')
-			val4=$(./read_seq /mnt/target_file $req_size | awk '{print $3}')
-			val5=$(./read_seq /mnt/target_file $req_size | awk '{print $3}')
-			val=`echo "scale=6; ($val1 + $val2 + $val3 + $val4 + $val5) / 5 " | bc `
-
+			val=$(./read_seq /mnt/target_file $req_size | awk '{print $3}')
 			printf "Throughput = %f\n" $val > $result_path/${frag_size}_${frag_distance}.result
 
 		done
