@@ -4,7 +4,7 @@
 This repository contains scripts and source codes of FragPicker, which will appear at SOSP 2021.
 
 ## Overview
-FragPicker is a defragmentatool for modern storage devices (Flash, Optane devices)
+FragPicker is a defragmentation tool for modern storage devices (Flash, Optane devices)
 The conventional fragmentors mostly migrate the entire contents of files into a new contiguous area, which (i) cause defragmentation to be time-consuming, (ii) significantly degrade the performance of co-running applications, and (iii) even curtail the lifetime of modern storage devices.
 
 To address this, FragPicker analyzes the I/O activities of applications and migrates only those pieces of data that are crucial to the I/O performance, in order to mitigate the aforementioned problems of existing tools.
