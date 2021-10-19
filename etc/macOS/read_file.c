@@ -1,0 +1,51 @@
+#define _GNU_SOURCE     /* Obtain O_DIRECT definition from <fcntl.h> */
+#include <fcntl.h>
+#include <sys/time.h>
+#include <time.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <stdio.h>
+
+int
+main(int argc, char *argv[])
+{
+	int fd;
+	ssize_t numRead=100;
+	ssize_t totalnumRead=0;
+	size_t size;
+	off_t offset;
+	unsigned char *buf;
+	int bufSize=0;
+	clock_t t;
+	struct timeval start, end;
+	long secs_used, micros_used;
+
+	size = 1024*128;
+	offset = 0;
+	buf = (unsigned char *)malloc(size);
+
+	fd = open(argv[1], O_RDONLY);
+	if (fd == -1)
+		printf("open\n");
+
+
+	gettimeofday(&start, NULL);
+	while (numRead != 0) {
+		numRead = read(fd, buf, size);
+		totalnumRead += numRead;
+
+		if (numRead == -1) {
+			printf("Error\n");
+			return 0;
+		}
+
+	}
+	gettimeofday(&end, NULL);
+	double elapsed_time = ((double)t)/CLOCKS_PER_SEC;
+
+	secs_used=(end.tv_sec - start.tv_sec);
+	micros_used = secs_used*1000000 + end.tv_usec - start.tv_usec;
+
+	printf("Throughput = %f\n", (double)totalnumRead/micros_used);
+
+}
