@@ -2,6 +2,7 @@
 
 # FragPicker
 This repository contains scripts and source codes of FragPicker, which will appear at SOSP 2021.
+(The etc directory contains just on-going fun stuff including a fragmentation test on macOS, so you can just ignore.)
 
 ## Overview
 FragPicker is a defragmentation tool for modern storage devices (Flash, Optane devices).
