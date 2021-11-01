@@ -2,7 +2,8 @@
 
 # FragPicker
 This repository contains scripts and source codes of FragPicker.
-You can learn more about FragPicker in our SOSP'21 paper, FragPicker: A New Defragmentation Tool for Modern Storage Devices(https://dl.acm.org/doi/pdf/10.1145/3477132.3483593)
+
+You can learn more about FragPicker in our SOSP'21 paper, [FragPicker: A New Defragmentation Tool for Modern Storage Devices](https://dl.acm.org/doi/pdf/10.1145/3477132.3483593)
 
 
 (The etc directory contains just on-going fun stuff including a fragmentation test on macOS, so you can just ignore.)
