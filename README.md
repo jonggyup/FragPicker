@@ -43,7 +43,7 @@ We use Ubuntu 18.04 LTS with Linux Kernel 5.7.0
 + **Storage devices**
 >1) HDD: Samsung HDD 7200RPM 1TB
 >2) MicroSD: Samsung MicroSD EVO type A1 128GB
->3) SATA SSD: Samsung SATA FLash SSD 850 PRO 256GB
+>3) SATA SSD: Samsung SATA Flash SSD 850 PRO 256GB
 >4) NVMe SSD: Intel NVMe Optane SSD 905P 960GB
 
 ### 1. Evaluation Setup
