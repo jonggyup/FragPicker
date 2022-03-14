@@ -1,7 +1,7 @@
 
 
 # FragPicker
-This repository contains the script files and source codes of FragPicker.
+This repository contains the script files, source codes, and slides of FragPicker.
 
 You can learn more about FragPicker in our SOSP '21 paper, [FragPicker: A New Defragmentation Tool for Modern Storage Devices](https://dl.acm.org/doi/pdf/10.1145/3477132.3483593)
 
