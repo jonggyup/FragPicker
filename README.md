@@ -9,7 +9,7 @@ You can learn more about FragPicker in our SOSP '21 paper, [FragPicker: A New De
 (The etc directory contains just on-going fun stuff including a fragmentation test on macOS, so you can just ignore.)
 
 This version of FragPicker only supports synchronous I/Os such as pread/pwrite.
-We also developed a new version for asynchrous ones such as io_uring or libaio.
+We also developed a new version for asynchrous ones such as io_uring and libaio.
 Please send me an email (jonggyu@skku.edu) if you need it.
 I am planning to release the new version in a new repository.
 
